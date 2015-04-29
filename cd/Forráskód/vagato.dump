@@ -1,0 +1,2143 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: accommodation_equipments; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE accommodation_equipments (
+    id integer NOT NULL,
+    accommodation_id integer,
+    equipment_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.accommodation_equipments OWNER TO deploy;
+
+--
+-- Name: accommodation_equipments_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE accommodation_equipments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accommodation_equipments_id_seq OWNER TO deploy;
+
+--
+-- Name: accommodation_equipments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE accommodation_equipments_id_seq OWNED BY accommodation_equipments.id;
+
+
+--
+-- Name: accommodations; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE accommodations (
+    id integer NOT NULL,
+    name character varying,
+    code character varying,
+    description text,
+    owner_id integer,
+    categry_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    image_file_name character varying,
+    image_content_type character varying,
+    image_file_size integer,
+    image_updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.accommodations OWNER TO deploy;
+
+--
+-- Name: accommodations_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE accommodations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accommodations_id_seq OWNER TO deploy;
+
+--
+-- Name: accommodations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE accommodations_id_seq OWNED BY accommodations.id;
+
+
+--
+-- Name: accommodations_serviices; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE accommodations_serviices (
+    accommodation_id integer,
+    serviice_id integer
+);
+
+
+ALTER TABLE public.accommodations_serviices OWNER TO deploy;
+
+--
+-- Name: addresses; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE addresses (
+    id integer NOT NULL,
+    country character varying,
+    zip character varying,
+    city character varying,
+    address character varying,
+    latitude double precision,
+    longitude double precision,
+    addressable_id integer,
+    addressable_type character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.addresses OWNER TO deploy;
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE addresses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.addresses_id_seq OWNER TO deploy;
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE addresses_id_seq OWNED BY addresses.id;
+
+
+--
+-- Name: admins; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE admins (
+    id integer NOT NULL,
+    name character varying,
+    phone character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.admins OWNER TO deploy;
+
+--
+-- Name: admins_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE admins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.admins_id_seq OWNER TO deploy;
+
+--
+-- Name: admins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE admins_id_seq OWNED BY admins.id;
+
+
+--
+-- Name: bookings; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE bookings (
+    id integer NOT NULL,
+    start_date date,
+    end_date date,
+    num_of_nights integer,
+    state character varying,
+    guest_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.bookings OWNER TO deploy;
+
+--
+-- Name: bookings_guests; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE bookings_guests (
+    id integer NOT NULL,
+    guest_id integer,
+    booking_id integer,
+    room_id integer,
+    role character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    bed integer,
+    room_index integer
+);
+
+
+ALTER TABLE public.bookings_guests OWNER TO deploy;
+
+--
+-- Name: bookings_guests_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE bookings_guests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bookings_guests_id_seq OWNER TO deploy;
+
+--
+-- Name: bookings_guests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE bookings_guests_id_seq OWNED BY bookings_guests.id;
+
+
+--
+-- Name: bookings_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE bookings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bookings_id_seq OWNER TO deploy;
+
+--
+-- Name: bookings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE bookings_id_seq OWNED BY bookings.id;
+
+
+--
+-- Name: bookings_rooms; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE bookings_rooms (
+    id integer NOT NULL,
+    booking_id integer,
+    room_id integer,
+    status character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    index integer
+);
+
+
+ALTER TABLE public.bookings_rooms OWNER TO deploy;
+
+--
+-- Name: bookings_rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE bookings_rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bookings_rooms_id_seq OWNER TO deploy;
+
+--
+-- Name: bookings_rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE bookings_rooms_id_seq OWNED BY bookings_rooms.id;
+
+
+--
+-- Name: categries; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE categries (
+    id integer NOT NULL,
+    name character varying,
+    code character varying,
+    value integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.categries OWNER TO deploy;
+
+--
+-- Name: categries_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE categries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.categries_id_seq OWNER TO deploy;
+
+--
+-- Name: categries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE categries_id_seq OWNED BY categries.id;
+
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE comments (
+    id integer NOT NULL,
+    stars integer,
+    text text,
+    guest_id integer,
+    accommodation_id integer,
+    booking_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.comments OWNER TO deploy;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comments_id_seq OWNER TO deploy;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
+
+
+--
+-- Name: equipment; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE equipment (
+    id integer NOT NULL,
+    name character varying,
+    code character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.equipment OWNER TO deploy;
+
+--
+-- Name: equipment_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE equipment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.equipment_id_seq OWNER TO deploy;
+
+--
+-- Name: equipment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE equipment_id_seq OWNED BY equipment.id;
+
+
+--
+-- Name: equipment_rooms; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE equipment_rooms (
+    id integer NOT NULL,
+    room_id integer,
+    equipment_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.equipment_rooms OWNER TO deploy;
+
+--
+-- Name: equipment_rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE equipment_rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.equipment_rooms_id_seq OWNER TO deploy;
+
+--
+-- Name: equipment_rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE equipment_rooms_id_seq OWNED BY equipment_rooms.id;
+
+
+--
+-- Name: filters; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE filters (
+    id integer NOT NULL,
+    filter character varying,
+    base_url character varying,
+    city character varying,
+    start_date date,
+    end_date date,
+    capacity integer,
+    guests integer,
+    close boolean,
+    cheap boolean,
+    one_bed boolean,
+    two_bed boolean,
+    three_bed boolean,
+    four_or_more_bed boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.filters OWNER TO deploy;
+
+--
+-- Name: filters_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE filters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.filters_id_seq OWNER TO deploy;
+
+--
+-- Name: filters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE filters_id_seq OWNED BY filters.id;
+
+
+--
+-- Name: guests; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE guests (
+    id integer NOT NULL,
+    name character varying,
+    phone character varying,
+    day_of_birth date,
+    guest_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.guests OWNER TO deploy;
+
+--
+-- Name: guests_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE guests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.guests_id_seq OWNER TO deploy;
+
+--
+-- Name: guests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE guests_id_seq OWNED BY guests.id;
+
+
+--
+-- Name: owners; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE owners (
+    id integer NOT NULL,
+    name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.owners OWNER TO deploy;
+
+--
+-- Name: owners_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE owners_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.owners_id_seq OWNER TO deploy;
+
+--
+-- Name: owners_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE owners_id_seq OWNED BY owners.id;
+
+
+--
+-- Name: prices; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE prices (
+    id integer NOT NULL,
+    value double precision,
+    currency character varying,
+    ifa double precision,
+    vat double precision,
+    room_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.prices OWNER TO deploy;
+
+--
+-- Name: prices_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE prices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.prices_id_seq OWNER TO deploy;
+
+--
+-- Name: prices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE prices_id_seq OWNED BY prices.id;
+
+
+--
+-- Name: properties; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE properties (
+    id integer NOT NULL,
+    key character varying,
+    value text,
+    "group" character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    title character varying
+);
+
+
+ALTER TABLE public.properties OWNER TO deploy;
+
+--
+-- Name: properties_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE properties_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.properties_id_seq OWNER TO deploy;
+
+--
+-- Name: properties_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE properties_id_seq OWNED BY properties.id;
+
+
+--
+-- Name: rooms; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE rooms (
+    id integer NOT NULL,
+    name character varying,
+    code character varying,
+    accommodation_id integer,
+    num_of_this integer,
+    capacity integer,
+    description text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    image_file_name character varying,
+    image_content_type character varying,
+    image_file_size integer,
+    image_updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.rooms OWNER TO deploy;
+
+--
+-- Name: rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rooms_id_seq OWNER TO deploy;
+
+--
+-- Name: rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE rooms_id_seq OWNED BY rooms.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO deploy;
+
+--
+-- Name: serviices; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE serviices (
+    id integer NOT NULL,
+    name character varying,
+    code character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.serviices OWNER TO deploy;
+
+--
+-- Name: serviices_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE serviices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.serviices_id_seq OWNER TO deploy;
+
+--
+-- Name: serviices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE serviices_id_seq OWNED BY serviices.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip inet,
+    last_sign_in_ip inet,
+    role_type character varying,
+    role_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.users OWNER TO deploy;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: deploy
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO deploy;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: deploy
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY accommodation_equipments ALTER COLUMN id SET DEFAULT nextval('accommodation_equipments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY accommodations ALTER COLUMN id SET DEFAULT nextval('accommodations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY addresses ALTER COLUMN id SET DEFAULT nextval('addresses_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY admins ALTER COLUMN id SET DEFAULT nextval('admins_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY bookings ALTER COLUMN id SET DEFAULT nextval('bookings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY bookings_guests ALTER COLUMN id SET DEFAULT nextval('bookings_guests_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY bookings_rooms ALTER COLUMN id SET DEFAULT nextval('bookings_rooms_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY categries ALTER COLUMN id SET DEFAULT nextval('categries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY comments ALTER COLUMN id SET DEFAULT nextval('comments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY equipment ALTER COLUMN id SET DEFAULT nextval('equipment_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY equipment_rooms ALTER COLUMN id SET DEFAULT nextval('equipment_rooms_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY filters ALTER COLUMN id SET DEFAULT nextval('filters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY guests ALTER COLUMN id SET DEFAULT nextval('guests_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY owners ALTER COLUMN id SET DEFAULT nextval('owners_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY prices ALTER COLUMN id SET DEFAULT nextval('prices_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY properties ALTER COLUMN id SET DEFAULT nextval('properties_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY rooms ALTER COLUMN id SET DEFAULT nextval('rooms_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY serviices ALTER COLUMN id SET DEFAULT nextval('serviices_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: deploy
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: accommodation_equipments; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY accommodation_equipments (id, accommodation_id, equipment_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: accommodation_equipments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('accommodation_equipments_id_seq', 1, false);
+
+
+--
+-- Data for Name: accommodations; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY accommodations (id, name, code, description, owner_id, categry_id, created_at, updated_at, image_file_name, image_content_type, image_file_size, image_updated_at) FROM stdin;
+2	Hotel 1	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec dui dictum, vestibulum ante non, vestibulum enim. Nunc convallis neque eu elit mollis, nec tincidunt ex viverra. Pellentesque posuere, ex vitae dapibus viverra, justo libero vestibulum nunc, et congue leo velit a nisi. Aenean et scelerisque mi. Fusce nec molestie magna. Integer fringilla auctor metus sed commodo. Sed at aliquet neque. Nunc faucibus porta consectetur. Cras ac dui consectetur, rutrum magna consequat, eleifend tortor.\r\n\r\nCras dolor diam, tempus nec scelerisque vel, pretium sit amet nulla. Etiam luctus leo sed ipsum tincidunt, id ornare leo vestibulum. Maecenas nisi elit, cursus non fermentum quis, viverra et massa. In sollicitudin justo tortor, id efficitur dolor volutpat sed. Proin ac metus odio. Integer tempus ac purus a mattis. Pellentesque accumsan dolor mattis dui pellentesque viverra.	2	5	2015-02-20 16:09:09.067244	2015-03-27 17:19:23.741037	hotel1.jpg	image/jpeg	225926	2015-03-27 17:19:23.030537
+4	Hotel 3	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut massa at est cursus dictum ut sed nisl. Sed elementum a leo consectetur dignissim. Etiam non faucibus ex, sed molestie velit. Phasellus elementum hendrerit lectus at interdum. Aenean iaculis vestibulum ultrices. Vivamus a risus rhoncus, ultrices eros sit amet, ultricies ipsum. Integer in turpis ligula. Vivamus molestie dictum purus, quis tempus diam tincidunt nec. Pellentesque sagittis nunc tortor, id rhoncus felis lobortis ac. Sed felis justo, cursus eget nisi rutrum, luctus maximus arcu. Nunc elementum dapibus pharetra. Aliquam dapibus justo et ornare luctus. Phasellus tempor suscipit suscipit. Nam dignissim aliquet consequat. Morbi dapibus efficitur ante, quis interdum nisi. Sed elit nibh, sollicitudin quis dapibus sit amet, tempus sit amet risus.\r\n\r\nInteger sed turpis pharetra, lobortis augue vel, porttitor dolor. Ut faucibus efficitur libero, in consectetur nunc ullamcorper in. Donec efficitur gravida sem at semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer malesuada nisi arcu, egestas feugiat purus venenatis at. Nulla facilisi. Donec maximus ultrices dolor, non viverra arcu viverra in. Vestibulum tempus non eros sit amet gravida. Proin molestie consectetur lacus quis pellentesque. Suspendisse maximus mi quis nisl dictum, quis egestas eros molestie. Nam aliquam tempus risus, in dignissim massa sollicitudin non. Phasellus nunc orci, imperdiet in nunc ac, lobortis mattis felis. Proin ante odio, ornare vel magna vitae, eleifend facilisis dolor. Nam suscipit quis lacus id porta. Vestibulum euismod vehicula justo.	4	3	2015-02-20 16:22:43.934142	2015-03-27 17:23:46.588471	hotel3.jpg	image/jpeg	1020563	2015-03-27 17:23:45.950071
+5	Hotel 4	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut massa at est cursus dictum ut sed nisl. Sed elementum a leo consectetur dignissim. Etiam non faucibus ex, sed molestie velit. Phasellus elementum hendrerit lectus at interdum. Aenean iaculis vestibulum ultrices. Vivamus a risus rhoncus, ultrices eros sit amet, ultricies ipsum. Integer in turpis ligula. Vivamus molestie dictum purus, quis tempus diam tincidunt nec. Pellentesque sagittis nunc tortor, id rhoncus felis lobortis ac. Sed felis justo, cursus eget nisi rutrum, luctus maximus arcu. Nunc elementum dapibus pharetra. Aliquam dapibus justo et ornare luctus. Phasellus tempor suscipit suscipit. Nam dignissim aliquet consequat. Morbi dapibus efficitur ante, quis interdum nisi. Sed elit nibh, sollicitudin quis dapibus sit amet, tempus sit amet risus.\r\n\r\nInteger sed turpis pharetra, lobortis augue vel, porttitor dolor. Ut faucibus efficitur libero, in consectetur nunc ullamcorper in. Donec efficitur gravida sem at semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer malesuada nisi arcu, egestas feugiat purus venenatis at. Nulla facilisi. Donec maximus ultrices dolor, non viverra arcu viverra in. Vestibulum tempus non eros sit amet gravida. Proin molestie consectetur lacus quis pellentesque. Suspendisse maximus mi quis nisl dictum, quis egestas eros molestie. Nam aliquam tempus risus, in dignissim massa sollicitudin non. Phasellus nunc orci, imperdiet in nunc ac, lobortis mattis felis. Proin ante odio, ornare vel magna vitae, eleifend facilisis dolor. Nam suscipit quis lacus id porta. Vestibulum euismod vehicula justo.	4	4	2015-02-20 16:23:47.184568	2015-03-27 17:24:13.201612	hotel4.jpg	image/jpeg	227782	2015-03-27 17:24:12.816145
+7	Hotel Sopron 	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2	4	2015-03-29 08:59:38.763643	2015-03-31 14:51:57.878929	sopron.jpg	image/jpeg	191624	2015-03-31 14:51:57.147985
+8	Hotel Szieszta	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2	3	2015-03-29 09:13:05.921333	2015-03-31 14:57:05.49928	szieszta.jpg	image/jpeg	84262	2015-03-31 14:57:04.982998
+13	Mercure Budapest Buda	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mauris massa, facilisis vitae lectus nec, sagittis mattis metus. Sed cursus molestie metus sit amet eleifend. Pellentesque rhoncus vitae quam nec finibus. Quisque semper tellus at est bibendum, sodales feugiat nisi porta. Donec et quam sit amet diam sagittis dictum. In ut ultricies ipsum, id dignissim augue. Fusce eleifend odio sed libero consequat, ut luctus purus interdum. Vivamus venenatis egestas lorem, eget condimentum dolor vehicula ac. Donec sed interdum tellus, sit amet mattis massa. Integer faucibus diam a dui posuere ultrices. Fusce venenatis viverra nunc, et ornare elit posuere eleifend. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris nec dolor felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut tempor gravida tortor. Nullam volutpat, neque eu lacinia laoreet, nisi dolor mollis libero, eu venenatis nisi nisi sed tortor.	4	4	2015-03-31 12:19:37.638329	2015-03-31 14:30:33.192513	mercure.jpg	image/jpeg	157161	2015-03-31 14:30:32.77233
+11	Hotel Charles	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mauris massa, facilisis vitae lectus nec, sagittis mattis metus. Sed cursus molestie metus sit amet eleifend. Pellentesque rhoncus vitae quam nec finibus. Quisque semper tellus at est bibendum, sodales feugiat nisi porta. Donec et quam sit amet diam sagittis dictum. In ut ultricies ipsum, id dignissim augue. Fusce eleifend odio sed libero consequat, ut luctus purus interdum. Vivamus venenatis egestas lorem, eget condimentum dolor vehicula ac. Donec sed interdum tellus, sit amet mattis massa. Integer faucibus diam a dui posuere ultrices. Fusce venenatis viverra nunc, et ornare elit posuere eleifend. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris nec dolor felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut tempor gravida tortor. Nullam volutpat, neque eu lacinia laoreet, nisi dolor mollis libero, eu venenatis nisi nisi sed tortor.	4	3	2015-03-31 11:21:07.618017	2015-03-31 14:29:32.340271	charles.jpg	image/jpeg	77206	2015-03-31 14:29:31.534911
+10	Hotel Fagus	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2	4	2015-03-29 15:00:18.626853	2015-03-31 14:47:52.927725	fagus.jpg	image/jpeg	154830	2015-03-31 14:47:51.871187
+6	Hotel Lővér Sopron	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2	3	2015-03-29 08:53:23.91417	2015-03-31 14:48:43.065561	lover.jpg	image/jpeg	273948	2015-03-31 14:48:42.479444
+9	Pannonia Hotel Sopron 	\N	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2	4	2015-03-29 14:44:31.734971	2015-03-31 14:59:07.991585	pannonia.jpg	image/jpeg	102781	2015-03-31 14:59:07.070214
+15	Hotel Novotel Székesfehérvár	\N	The Novotel Szekesfehevar is a 4-star hotel located in the center of Szekesfehervar. For guests on a business trip, we offer seven meeting rooms and the convenience of Wi-Fi Internet access, which we provide free for our clients. Spend your next short break or weekend away discovering the fascinating museums, palaces and architecture of the former capital of Hungary. The hotel features a restaurant, bar, fitness center, indoor play area for children and a garage.	8	4	2015-04-01 08:11:24.149108	2015-04-01 08:12:04.250853	3333_ho_00_p_1024x768.jpg	image/jpeg	194271	2015-04-01 08:11:21.555448
+16	Hotel Novotel Szeged	\N	The Novotel Szeged is a 4-star hotel located in the center of Szeged on the bank of the Tisza River. Spend your next holiday discovering this beautiful city and stay at the Novotel, close to the Ferenc Mora Museum and the Votive Church. There is plenty for the family to enjoy as well with a variety of sports and entertainment in and around the city. The hotel features a restaurant, bar and meeting rooms as well as free Wi-Fi Internet and on-site parking for your convenience.	8	4	2015-04-01 08:21:50.248721	2015-04-01 08:21:50.248721	2996_ho_00_p_1024x768.jpg	image/jpeg	180338	2015-04-01 08:21:48.841486
+17	Hotel Magister Veszprém	\N	A "Hotel Magister" szálloda jellegű modern épülete Veszprém egyetemi városrészében, a belvároshoz közel, nyugodt kertvárosi környezetben helyezkedik el. Igényesen berendezett 2 ágyas és 2x2 ágyas fürdőszobás-minikonyhás apartmanokkal várja kedves vendégeit. Szintenként társalgó televízióval, közös konyha, 24 órás recepció szolgálat, büfé-kávézó szolgálják a vendégek kényelmét. A 2006-ban átadott 800 férőhelyes diákhotel  240 főt befogadó, modern technikával felszerelt légkondicionált rendezvénytermével, nagy területű saját, zárt parkolójával ideális helyszínt kínál konferenciák, tréningek, esküvők, üzleti- és egyéb rendezvények igényes lebonyolításához.	9	2	2015-04-01 10:59:03.706102	2015-04-01 10:59:03.706102	13-.png	image/png	456218	2015-04-01 10:59:02.569527
+42	Nador Apartman Budapest	\N		11	2	2015-04-19 17:58:45.120478	2015-04-19 17:58:45.120478	\N	\N	\N	\N
+43	Promenade City Hotel Budapest	\N		11	3	2015-04-19 18:00:53.374024	2015-04-19 18:00:53.374024	\N	\N	\N	\N
+44	Achat Premium Hotel Budapest	\N		12	4	2015-04-19 18:05:23.751935	2015-04-19 18:05:23.751935	\N	\N	\N	\N
+45	Pest Inn Budapest	\N		12	3	2015-04-19 18:06:30.863788	2015-04-19 18:06:30.863788	\N	\N	\N	\N
+46	Atlantic Hotel Budapest	\N		12	3	2015-04-19 18:08:00.469256	2015-04-19 18:08:00.469256	\N	\N	\N	\N
+47	Hotel Swing City Budapest	\N		12	3	2015-04-19 18:09:16.183657	2015-04-19 18:09:16.183657	\N	\N	\N	\N
+48	Corvin Hotel Budapest	\N		12	3	2015-04-19 18:10:10.069488	2015-04-19 18:10:10.069488	\N	\N	\N	\N
+49	Ráday Central Apartman Budapest	\N		12	2	2015-04-19 18:11:23.900744	2015-04-19 18:11:23.900744	\N	\N	\N	\N
+50	Hotel Omnibusz Budapest	\N		12	3	2015-04-19 18:12:48.709567	2015-04-19 18:12:48.709567	\N	\N	\N	\N
+51	Six Inn Budapest	\N		12	3	2015-04-19 18:13:47.49394	2015-04-19 18:13:47.49394	\N	\N	\N	\N
+52	Benczúr Hotel Budapest	\N		12	3	2015-04-19 18:15:06.097598	2015-04-19 18:15:06.097598	\N	\N	\N	\N
+18	Adagio Hostel 2.0 Basilica Budapest	\N	Kedves vendégeink!\r\n\r\nMegnyitottuk második Hostelünket az Adagio Hostel 2.0 Bazilica-át, amely a város központjában, az Andrássy út és a Bajcsy-Zsilinszky út kereszteződésében, Budapest egyik legimpozánsabb épületében, a Feszty Adolf tervezte neoreneszánsz Foncière-palotában található.\r\n\r\nItt tartózkodásuk alatt, egy nyugodt, tiszta és barátságos helyet szeretnénk vendégeink számára biztosítani, ahová boldogan térhetnek vissza egy hosszú városnézéssel teli nap után.\r\n\r\nA barátságos személyzet örömmel válaszol kérdéseikre, tanácsokkal segít, hogy az üdülés emlékezetes legyen. A Hostelben számos szoba típus megtalálható: 12,10,8,6,4 ágyas szobáktól a kétágyas saját fürdőszobával rendelkező szobákig. \r\nTeljesen felszerelt konyha, társalgó, TV és ingyenes internet áll a vendégeink rendelkezésére.\r\n\r\nKérjük, vegye figyelembe:\r\n\r\nLemondási feltételek: legkésőbb 24 órával érkezés előtt lehetséges. \r\nHatáridőn túli lemondás vagy nem megjelenés, az első éjszaka díjának megfizetésével jár. \r\nFizetés érkezéskor készpénzben lehetséges. \r\nÉrkezés 13.00 - 00.00 \r\nCheck out 10.00 óráig \r\nAz ár az idegenforgalmi adót és reggelit nem tartalmazza, az ágyneműt és ingyenes térképet igen!	10	3	2015-04-19 12:18:38.126437	2015-04-19 12:18:38.126437	adagio.jpg	image/jpeg	12453	2015-04-19 12:18:37.470475
+19	Duna Apartmanház Budapest	\N	A Duna Apartmanház Budapest minőségi szálláshelyet biztosít kedvező áron, Budapest szívében. Mindössze 100 méterre a Szent István Bazilikától, egy csendes mellékutcában várják Önt apartmanjaink.\r\n\r\nA Duna Apartmanház Budapest épülete Budapest egyik legszebb utcájában, a Sas utcában áll, nem messze a Deák Ferenc tértől. A Deák Ferenc téri metrómegálló így csak pár perc sétára van, ahol a város három metróvonala is találkozik (M1, M2, M3). Az új M4-es metróvonal Kálvin téri megállója 10 percen belül elérhető tömegközlekedéssel. A közelben sok autóbusz (9, 15, 16, 105, 115, 216, 272, 909, 914, 914A, 916, 930, 931, 950, 950A, 966, 972, 979, 979A), trolibusz (72, 73, 74) és villamos (2, 47, 49) is megáll. A híres Lánchíd lábától számos sétahajós kirándulás indul!\r\n\r\nA budapesti Szent István Bazilika hazánk egyik legszebb, legjelentősebb egyházi és idegenforgalmi nevezetessége, aminek szomszédságában foglalhat nálunk szállást. Ezen kívül karnyújtásnyira fekszik például az Országház, az Erzsébet téri Óriáskerék és a Budai Vár is. Budapest híres gyógyfürdői szintén közel vannak, élvezze Ön is a gyógyfürdők által nyújtott kényeztetést!\r\n\r\nLakásaink jól felszereltek, nagy kényelmet és jó minőségű szállást nyújtanak, mégis megfizethető áron. A tisztaságra különös figyelmet fordítunk. Mindez Budapest központjában, a belváros szívében, a Bazilika mellett!\r\n\r\nLegyen a vendégünk!\r\n\r\nFIGYELEM! Pénteken és szombaton az ártáblában szereplő értékhez képest +10%-ot számolunk fel. Kivételek ez alól az ünnepek és nagyobb események, amikor külön árazás van.	10	3	2015-04-19 12:27:39.543955	2015-04-19 12:27:39.543955	duna.jpg	image/jpeg	41326	2015-04-19 12:27:39.250994
+20	Hotel Chesscom Budapest	\N	\r\nA Hotel Chesscom Budapest XIX. kerületében, a Kőbánya-Kispest Metró végállomástól alig 80 méterre fekszik. Tömegközlekedési eszközökkel is rendkívül könnyen bárhonnan éjjel-nappal megközelíthető. Metróval csupán 15 perc alatt elérhető a belváros. Ezenkívül kedvezően helyezkedik el, a Ferihegyi repülőtérhez közel (taxival kb. 15 perc, 200-as busszal 20 perc).\r\n\r\nAz épület modern, újonnan épült.\r\n\r\nA Hotel saját parkolóval várja a gépkocsival érkező vendégeit.\r\n\r\nA Hotel Chesscom 38 egy-, két-, illetve háromágyas pótágyazható szobával rendelkezik. A szobák mindegyike rendelkezik légkondiciónálóval, kábeltv-vel, telefonnal, és wifi Internet csatlakozási lehetőséggel.\r\n\r\nA Szállodától 50 méterre találató a Kispesti Uszoda, ahol lehetőség adódik felfrissülésre, sportolásra, szauna és egyéb wellness szolgáltatások igénybevételére is	10	2	2015-04-19 13:07:27.462985	2015-04-19 13:07:27.462985	2934474.jpg	image/jpeg	48633	2015-04-19 13:07:27.074806
+21	Hotel Panda Budapest	\N	Budapest nyüzsgő központjához közel, mégis csendes helyen az egyik legszebb, budai zöldövezetben található a Hotel Panda.\r\nÉtterem \r\n80 fős légkondicionált éttermünk meleg hangulatával állófogadások, céges rendezvények, esküvői vacsorák, családi események színhelyéül szolgál.\r\n\r\nKonferenciatermek \r\n30 és 40 fős légkondicionált, magas technikai felszereltséggel ellátott konferenciatermeinket tréningek, továbbképzések, konferenciák színvonalas helyszínéül ajánljuk.\r\n\r\nKikapcsolódás \r\nWellness részlegünkben relaxációs-, teázó sziget biztosítja vendégeink teljes kikapcsolódását. Az aktív programokat kedvelők számára a számtalan kikapcsolódási lehetőséget nyújtó környék felfedezéséhez.\r\n\r\nA szálloda egyedülálló módon 95%ban megváltozott munkaképességű alkalmazottakat foglalkoztat.	10	3	2015-04-19 13:19:41.602427	2015-04-19 13:19:41.602427	2850573.jpg	image/jpeg	35880	2015-04-19 13:19:41.264492
+22	Hotel Lucky Budapest	\N	Hotel LUCKY*** szállodánk Budapest, Vezér út 180 alatt található, zöldövezeti környezetben a Vásárváros és az M3 autópálya között, a Paskál fürdő közvetlen szomszédságában. \r\nSzolgáltatásaink a szállás és éttermi szolgáltatásokra összpontosítanak! Különböző méretű de gazdagon felszerelt szobáinkban az üzleti, céges utazó és a turista is megtalálja számításait! Néhány szobában főzősarok is található hűtőszekrénnyel, melyekben többágyas elhelyezés is megoldható max. 4 főig.\r\nA szobákban elérhető most már a WI-FI szolgáltatás is! Parkolóban tárolhatja gépkocsiját melyet az épület mellett talál meg.\r\nÉttermünk naponta 12.00-15.00-ig és 18.00-22.00-ig tart nyitva!	10	3	2015-04-19 13:29:24.361164	2015-04-19 13:29:24.361164	2887689.jpg	image/jpeg	35107	2015-04-19 13:29:24.036036
+23	Intercontinental Budapest	\N	Szobák, szolgáltatások\r\nKiránduljon néhány napra Budapestre és legyen utazása idejére az Intercontinental Budapest vendége! \r\nA hotel 398 barátságosan berendezett szobával várja a Budapesten megszállni kívánó vendégeket. \r\nSemmi akadálya nincs, hogy kisállatát is elhozza a pihenésre, mivel a hotel állatbarát. Ha kedve támad a helyszínen fogyasztani, a hotel saját éttermében kóstolhatja meg az ízletes helyi fogásokat. A szálláshely felár ellenében parkolót biztosít a vendégei, így az Ön autója számára is. \r\nA foglaláshoz tartozó pontos és részletes felszereltséget, valamint a teljeskörű szolgáltatáslistát az egyes szobatípusok és a szálláshely lenti adatlapján találja, ideértve az esetlegesen feláras szolgáltatásokat is.\r\n\r\nÉrkezés, nyitva tartás\r\nA munkatársak angol és magyar nyelveken tudnak Önnel kommunikálni.	3	5	2015-04-19 14:13:06.840211	2015-04-19 14:13:06.840211	2.jpg	image/jpeg	214440	2015-04-19 14:13:06.156832
+24	Olcsó Hotel 1	\N		11	1	2015-04-19 14:31:09.354332	2015-04-19 14:31:09.354332	\N	\N	\N	\N
+26	Olcsó hotel 3	\N		11	1	2015-04-19 14:34:02.505282	2015-04-19 14:34:02.505282	\N	\N	\N	\N
+27	Olcsó Hotel 4	\N		11	1	2015-04-19 14:35:42.132161	2015-04-19 14:35:42.132161	\N	\N	\N	\N
+28	Drága Hotel 1	\N		11	5	2015-04-19 14:36:34.711293	2015-04-19 14:36:34.711293	\N	\N	\N	\N
+30	Carlton Hotel Budapest	\N		11	4	2015-04-19 17:43:38.653928	2015-04-19 17:43:38.653928	\N	\N	\N	\N
+31	E&G Residence Budapest	\N		11	4	2015-04-19 17:44:49.589375	2015-04-19 17:44:49.589375	\N	\N	\N	\N
+53	Drága Hotel 2	\N		11	5	2015-04-21 10:49:53.143465	2015-04-21 10:49:53.143465	\N	\N	\N	\N
+54	Olcsó Hotel 2	\N		11	1	2015-04-21 10:52:56.430383	2015-04-21 10:52:56.430383	\N	\N	\N	\N
+\.
+
+
+--
+-- Name: accommodations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('accommodations_id_seq', 54, true);
+
+
+--
+-- Data for Name: accommodations_serviices; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY accommodations_serviices (accommodation_id, serviice_id) FROM stdin;
+2	1
+2	3
+2	5
+3	3
+3	5
+4	3
+4	5
+5	3
+5	4
+5	5
+6	1
+6	2
+6	3
+6	4
+6	5
+7	1
+7	2
+7	5
+8	1
+8	2
+8	3
+8	4
+8	5
+9	3
+9	4
+9	5
+10	1
+10	2
+10	3
+10	4
+10	5
+11	3
+11	5
+12	1
+12	2
+12	3
+12	4
+12	5
+13	3
+13	5
+14	4
+14	5
+15	1
+15	3
+15	4
+15	5
+16	1
+16	3
+16	4
+16	5
+17	5
+20	3
+20	5
+21	5
+22	3
+22	5
+23	1
+23	2
+23	3
+23	4
+23	5
+28	1
+28	2
+29	3
+30	5
+31	5
+32	5
+36	5
+37	5
+38	5
+39	5
+40	5
+41	5
+43	1
+44	3
+44	5
+45	5
+46	5
+47	5
+48	5
+49	5
+50	5
+\.
+
+
+--
+-- Data for Name: addresses; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY addresses (id, country, zip, city, address, latitude, longitude, addressable_id, addressable_type, created_at, updated_at) FROM stdin;
+1	AL	0123	Sopron	Deák Ferenc tér 1.	\N	\N	1	Guest	2015-02-20 15:35:05.870613	2015-02-20 15:35:05.870613
+2	HU	1000	Budapest	Váci utca 1	47.5139834000000008	19.0594125000000005	1	Accommodation	2015-02-20 15:58:32.218611	2015-02-20 15:58:32.218611
+7	HU	8200	Veszprém	Egyetem utca 12.	47.0846238999999969	17.9095340999999983	58	Guest	2015-03-27 17:15:34.341617	2015-03-27 17:15:34.341617
+4	HU	1000	Budapest	Kossuth tér 2.	47.4581661000000068	19.1460673999999997	3	Accommodation	2015-02-20 16:18:08.982951	2015-03-27 17:20:48.043053
+8	HU	9400	Sopron	Várisi út. 4.	47.6679835999999995	16.5789696999999983	6	Accommodation	2015-03-29 08:53:23.924298	2015-03-29 10:36:30.230121
+9	HU	9400	Sopron	Fövényverem utca 7.	47.6888891999999984	16.5937315000000005	7	Accommodation	2015-03-29 08:59:38.77102	2015-03-29 10:36:56.741453
+10	HU	9400	Sopron	Lővér körút 37.	47.6710303999999994	16.5751612000000002	8	Accommodation	2015-03-29 09:13:05.930913	2015-03-29 10:37:11.008125
+12	HU	9400	Sopron	Ojtózi fasor 3.	47.667172800000003	16.5785568000000012	10	Accommodation	2015-03-29 15:00:18.628834	2015-03-29 15:00:18.628834
+14	HU	1014	Budapest	Hess Andras ter 1-3.	47.5031267000000028	19.0327775000000017	12	Accommodation	2015-03-31 11:47:33.021839	2015-03-31 11:47:33.021839
+16	HU	1025	Budapest	Ganz utca 8.	47.5108900000000034	19.0371629999999996	14	Accommodation	2015-03-31 13:00:56.160097	2015-03-31 13:00:56.160097
+11	HU	9400	Sopron 	Várkerület 75.	47.6837230999999875	16.5924489999999984	9	Accommodation	2015-03-29 14:44:31.738185	2015-03-31 14:59:07.993422
+17	HU	8000	Székesfehérvár	 Ady Endre u. 19	47.1934889999999996	18.4045820000000013	15	Accommodation	2015-04-01 08:11:24.172782	2015-04-01 08:11:24.172782
+18	HU	6721	Szeged	Zsótér u. 2	46.2574479000000025	20.1599469000000013	16	Accommodation	2015-04-01 08:21:50.26617	2015-04-01 08:21:50.26617
+19	HU	8200	Veszprém	H-8200 Veszprém, József Attila u. 34/ 2.	47.0873247000000035	17.9012943	17	Accommodation	2015-04-01 10:59:03.711129	2015-04-01 10:59:03.711129
+20	HU	1111	Budapest	Kis utca 1	47.4827140000000014	19.2391210000000008	60	Guest	2015-04-17 11:02:28.521365	2015-04-17 11:02:28.521365
+21	HU	1111	Budapest	Rózsa tér 2.	47.4109978999999981	19.0554406000000007	61	Guest	2015-04-17 11:03:17.343091	2015-04-17 11:03:17.343091
+48	HU	1101	Budapest	Hungária körút 5.	47.4928420999999972	19.1109134999999988	44	Accommodation	2015-04-19 18:05:23.753763	2015-04-19 18:05:23.753763
+27	HU	1052	Budapest	Apáczai Csere János u. 12.	47.4978394999999978	19.0475986000000006	23	Accommodation	2015-04-19 14:13:06.843413	2015-04-19 14:13:06.843413
+49	HU	1107	Budapest	Zágrábi utca 1-3.	47.4716549999999984	19.1132390000000001	45	Accommodation	2015-04-19 18:06:30.865491	2015-04-19 18:06:30.865491
+28	HU	4032	Debrecen	Bán Imre utca 28.	47.5484681000000009	21.5964641999999998	24	Accommodation	2015-04-19 14:31:09.356842	2015-04-19 14:31:09.356842
+29	HU	4033	Debrecen	Budai Nagy Antal utca 180.	47.5468100000000007	21.6571229999999986	25	Accommodation	2015-04-19 14:32:32.741305	2015-04-19 14:32:32.741305
+30	HU	4030	Debrecen	Borzán Gáspár utca  26.	47.509332999999998	21.6528320000000001	26	Accommodation	2015-04-19 14:34:02.507193	2015-04-19 14:34:02.507193
+31	HU	4030	Debrecen	Vértesi utca 1.	47.5037698000000006	21.6021445000000014	27	Accommodation	2015-04-19 14:35:42.134673	2015-04-19 14:35:42.134673
+32	HU	4025	Debrecen	Piac utca 25.	47.5296528999999879	21.6248083999999992	28	Accommodation	2015-04-19 14:36:34.713125	2015-04-19 14:36:34.713125
+50	HU	1081	Budapest	Népszínház utca 55	47.4935819000000023	19.0810467000000017	46	Accommodation	2015-04-19 18:08:00.471299	2015-04-19 18:08:00.471299
+3	HU	1000	Budapest	Aliz utca 10.	47.4580819999999974	19.0489780000000017	2	Accommodation	2015-02-20 16:09:09.082167	2015-04-19 17:19:28.017889
+51	HU	1094	Budapest	Ferenc körút 19-21.	47.4825458999999981	19.0690540000000013	47	Accommodation	2015-04-19 18:09:16.185563	2015-04-19 18:09:16.185563
+52	HU	1094	Budapest	Angyal utca 31.	47.4831446000000028	19.0703634999999991	48	Accommodation	2015-04-19 18:10:10.071374	2015-04-19 18:10:10.071374
+53	HU	1092	Budapest	Erkel utca 14/A	47.4870693000000017	19.0625202000000016	49	Accommodation	2015-04-19 18:11:23.902842	2015-04-19 18:11:23.902842
+54	HU	1101	Budapest	Üllői út 108.	47.4724130000000031	19.1077480000000008	50	Accommodation	2015-04-19 18:12:48.71151	2015-04-19 18:12:48.71151
+22	HU	1016	Budapest	Andrássy út 2.	47.5002361000000022	19.0555029000000005	18	Accommodation	2015-04-19 12:18:38.129628	2015-04-19 17:33:31.623039
+5	HU	1000	Budapest	Szováta u. 3.	47.4713569999999976	19.0347411999999991	4	Accommodation	2015-02-20 16:22:43.947529	2015-04-19 17:01:37.059291
+23	HU	1051	Budapest	Sas utca 9.	47.5001405000000005	19.0522972999999993	19	Accommodation	2015-04-19 12:27:39.546338	2015-04-19 17:34:21.610824
+55	HU	1064	Budapest	Rózsa utca 85.	47.5098344000000026	19.0661042999999992	51	Accommodation	2015-04-19 18:13:47.495771	2015-04-19 18:13:47.495771
+13	HU	1016	Budapest	Hegyalja út 23.	47.4886800000000022	19.0315456000000012	11	Accommodation	2015-03-31 11:21:07.620916	2015-04-19 17:34:56.502063
+24	HU	1191	Budapest	Bartók Béla út 5.	47.4612211999999971	19.1499746000000002	20	Accommodation	2015-04-19 13:07:27.465221	2015-04-19 17:35:22.339997
+26	HU	1148	Budapest	Vezér utca 180.	47.5214349000000027	19.1225419999999993	22	Accommodation	2015-04-19 13:29:24.363321	2015-04-19 17:35:55.060553
+25	HU	1026	Budapest	Pasaréti út 133.	47.5237758999999969	18.994136000000001	21	Accommodation	2015-04-19 13:19:41.604698	2015-04-19 17:36:25.885557
+15	HU	1074	Budapest	Rákócszi út 58.	47.4979417000000126	19.0726365999999992	13	Accommodation	2015-03-31 12:19:37.641188	2015-04-19 17:37:02.288219
+33	HU	1015	Budapest	Batthyány utca 14.	47.5068302000000031	19.0336096999999995	29	Accommodation	2015-04-19 17:41:29.790309	2015-04-19 17:41:29.790309
+34	HU	1011	Budapest	Apor Péter utca 3.	47.4994253999999998	19.0392629000000007	30	Accommodation	2015-04-19 17:43:38.65597	2015-04-19 17:43:38.65597
+35	HU	1015	Budapest	Battyhány utca 49.	47.5071261000000007	19.0292096000000015	31	Accommodation	2015-04-19 17:44:49.59143	2015-04-19 17:44:49.59143
+36	HU	1024	Budapest	Rózsahegy utca 3/b	47.5136558000000022	19.0307023999999991	32	Accommodation	2015-04-19 17:46:04.498787	2015-04-19 17:46:04.498787
+37	HU	1027	Budapest	Ganz utca 15.	47.5111690000000024	19.0362210000000012	33	Accommodation	2015-04-19 17:48:17.385701	2015-04-19 17:48:17.385701
+38	HU	1024	Budapest	Lövőház utca 29.	47.5103433999999964	19.0243386000000001	34	Accommodation	2015-04-19 17:49:46.003563	2015-04-19 17:49:46.003563
+39	HU	1031	Budapest	Rozgonyi Piroska utca 40.	47.5736915999999965	19.0651717000000005	35	Accommodation	2015-04-19 17:51:15.580326	2015-04-19 17:51:15.580326
+56	HU	1068	Budapest	Benczúr utca 35.	47.5113324999999875	19.0762229999999988	52	Accommodation	2015-04-19 18:15:06.099636	2015-04-19 18:15:06.099636
+6	HU	1000	Budapest	Tétényi út 50.	47.4628858000000022	19.0336715000000005	5	Accommodation	2015-02-20 16:23:47.19805	2015-04-19 17:16:56.6876
+40	HU	1039	Budapest	Attila utca 20.	47.582226200000008	19.0495769999999993	36	Accommodation	2015-04-19 17:52:19.747905	2015-04-19 17:52:19.747905
+41	HU	1038	Budapest	Vasút sor 20.	47.5913929000000024	19.0487800000000007	37	Accommodation	2015-04-19 17:53:26.43677	2015-04-19 17:53:26.43677
+42	HU	1047	Budapest	Váci út 27-29.	47.566194000000003	19.0798650000000016	38	Accommodation	2015-04-19 17:54:36.78061	2015-04-19 17:54:36.78061
+43	HU	1047	Budapest	Váci út 27-29.	47.566194000000003	19.0798650000000016	39	Accommodation	2015-04-19 17:54:47.05293	2015-04-19 17:54:47.05293
+44	HU	1044	Budapest	Kisfaludy utca 16.	47.5726708999999985	19.0836189000000012	40	Accommodation	2015-04-19 17:56:25.16853	2015-04-19 17:56:25.16853
+45	HU	1047	Budapest	Fóti út 75.	47.5775859000000025	19.0925529999999988	41	Accommodation	2015-04-19 17:57:25.885694	2015-04-19 17:57:25.885694
+46	HU	1054	Budapest	Nádor utca 36.	47.5052060000000012	19.0478640000000006	42	Accommodation	2015-04-19 17:58:45.122612	2015-04-19 17:58:45.122612
+47	HU	1052	Budapest	Váci utca 22.	47.4939730999999981	19.0527197000000008	43	Accommodation	2015-04-19 18:00:53.375935	2015-04-19 18:00:53.375935
+58	HU	4033	Debrecen	Szabó Pál utca 20.	47.5441489999999973	21.6685289999999995	54	Accommodation	2015-04-21 10:52:56.432401	2015-04-21 10:52:56.432401
+57	HU	4025	Debrecen	Liszt Ferenc utca 10.	47.5303109999999975	21.6284050000000008	53	Accommodation	2015-04-21 10:49:53.146005	2015-04-21 10:55:11.931452
+\.
+
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('addresses_id_seq', 58, true);
+
+
+--
+-- Data for Name: admins; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY admins (id, name, phone, created_at, updated_at) FROM stdin;
+1	admin1	0123456789	2015-02-20 17:01:38.817	2015-02-20 17:01:40.455
+\.
+
+
+--
+-- Name: admins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('admins_id_seq', 1, false);
+
+
+--
+-- Data for Name: bookings; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY bookings (id, start_date, end_date, num_of_nights, state, guest_id, created_at, updated_at) FROM stdin;
+23	\N	\N	\N	CART	60	2015-04-17 11:02:38.391516	2015-04-17 11:02:38.391516
+21	2015-03-30	2015-03-31	1	CLOSED	1	2015-03-30 16:52:57.18871	2015-04-20 09:36:24.099253
+22	2015-04-20	2015-04-23	3	APPROVED	1	2015-03-30 16:54:17.803489	2015-04-20 09:36:59.997558
+24	2015-06-25	2015-06-27	2	BOOKED	1	2015-04-20 09:35:10.662969	2015-04-20 09:39:34.056561
+25	2015-03-28	2015-03-30	2	APPROVED	1	2015-04-20 09:39:34.096121	2015-04-20 10:40:53.76665
+26	2015-04-22	2015-04-25	3	CART	1	2015-04-20 09:52:48.716945	2015-04-22 17:52:42.203318
+\.
+
+
+--
+-- Data for Name: bookings_guests; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY bookings_guests (id, guest_id, booking_id, room_id, role, created_at, updated_at, bed, room_index) FROM stdin;
+77	1	21	10	BOOKER	2015-03-30 16:52:57.192332	2015-03-30 16:54:17.686555	1	\N
+78	59	21	10	RELATIVE	2015-03-30 16:54:17.718547	2015-03-30 16:54:17.718547	2	\N
+79	1	22	\N	\N	2015-03-30 16:54:17.80594	2015-03-30 16:54:17.80594	\N	\N
+80	60	23	\N	\N	2015-04-17 11:02:38.404489	2015-04-17 11:02:38.404489	\N	\N
+81	62	22	24	RELATIVE	2015-04-20 09:35:10.575059	2015-04-20 09:35:10.575059	1	1
+82	63	22	24	RELATIVE	2015-04-20 09:35:10.580152	2015-04-20 09:35:10.580152	2	1
+83	64	22	24	RELATIVE	2015-04-20 09:35:10.587043	2015-04-20 09:35:10.587043	1	2
+84	65	22	24	RELATIVE	2015-04-20 09:35:10.591801	2015-04-20 09:35:10.591801	2	2
+85	66	22	25	RELATIVE	2015-04-20 09:35:10.599092	2015-04-20 09:35:10.599092	1	3
+86	67	22	25	RELATIVE	2015-04-20 09:35:10.603691	2015-04-20 09:35:10.603691	2	3
+87	1	24	34	BOOKER	2015-04-20 09:35:10.669524	2015-04-20 09:39:34.002054	1	1
+88	68	24	34	RELATIVE	2015-04-20 09:39:34.031304	2015-04-20 09:39:34.031304	2	1
+89	69	24	26	RELATIVE	2015-04-20 09:39:34.040665	2015-04-20 09:39:34.040665	1	2
+90	70	24	26	RELATIVE	2015-04-20 09:39:34.047053	2015-04-20 09:39:34.047053	2	2
+91	1	25	15	BOOKER	2015-04-20 09:39:34.098549	2015-04-20 09:52:48.561968	1	\N
+92	71	25	15	RELATIVE	2015-04-20 09:52:48.567725	2015-04-20 09:52:48.567725	2	\N
+93	72	25	15	RELATIVE	2015-04-20 09:52:48.589995	2015-04-20 09:52:48.589995	3	\N
+94	1	26	\N	\N	2015-04-20 09:52:48.719206	2015-04-20 09:52:48.719206	\N	\N
+\.
+
+
+--
+-- Name: bookings_guests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('bookings_guests_id_seq', 94, true);
+
+
+--
+-- Name: bookings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('bookings_id_seq', 26, true);
+
+
+--
+-- Data for Name: bookings_rooms; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY bookings_rooms (id, booking_id, room_id, status, created_at, updated_at, index) FROM stdin;
+75	21	10	CLOSED	2015-03-30 16:54:06.107035	2015-04-20 09:36:24.096351	\N
+78	22	24	APPROVED	2015-04-20 09:07:38.014669	2015-04-20 09:36:59.990173	1
+79	22	24	APPROVED	2015-04-20 09:07:43.857985	2015-04-20 09:36:59.992609	2
+80	22	25	APPROVED	2015-04-20 09:07:51.708695	2015-04-20 09:36:59.994852	3
+81	24	34	BOOKED	2015-04-20 09:39:03.910693	2015-04-20 09:39:34.051323	1
+82	24	26	BOOKED	2015-04-20 09:39:08.395595	2015-04-20 09:39:34.054038	2
+85	25	15	APPROVED	2015-04-20 09:52:18.26312	2015-04-20 10:40:53.755221	\N
+86	26	11	CART	2015-04-22 17:52:29.299476	2015-04-22 17:52:29.299476	1
+87	26	11	CART	2015-04-22 17:52:31.810304	2015-04-22 17:52:31.810304	2
+88	26	13	CART	2015-04-22 17:52:37.767895	2015-04-22 17:52:37.767895	3
+89	26	19	CART	2015-04-22 17:52:42.205781	2015-04-22 17:52:42.205781	4
+\.
+
+
+--
+-- Name: bookings_rooms_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('bookings_rooms_id_seq', 89, true);
+
+
+--
+-- Data for Name: categries; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY categries (id, name, code, value, created_at, updated_at) FROM stdin;
+1	1 csillag	STAR_1	1	2015-02-20 16:02:10.146827	2015-02-20 16:03:41.667264
+2	2 csillag	STAR_2	2	2015-02-20 16:02:31.709424	2015-02-20 16:03:50.178878
+3	3 csillag	STAR_3	3	2015-02-20 16:04:05.397413	2015-02-20 16:04:05.397413
+4	4 csillag	STAR_4	4	2015-02-20 16:04:15.630177	2015-02-20 16:04:15.630177
+5	5 csillag	STAR_5	5	2015-02-20 16:04:27.336501	2015-02-20 16:04:27.336501
+\.
+
+
+--
+-- Name: categries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('categries_id_seq', 5, true);
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY comments (id, stars, text, guest_id, accommodation_id, booking_id, created_at, updated_at) FROM stdin;
+2	8	Szép épület, kedves kiszolgálás. Nehéz a parkolás és viszonylag drága.	1	9	\N	2015-04-17 11:11:29.341604	2015-04-17 11:11:29.341604
+3	10	Mindennel meg voltunk elégedve, mindenkinek csak ajánlani tudom!	60	9	\N	2015-04-17 11:12:37.797614	2015-04-17 11:12:37.797614
+4	5	Akadozott a fűtés és az ételek sem ízlettek.	61	9	\N	2015-04-17 11:13:10.494446	2015-04-17 11:13:10.494446
+\.
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('comments_id_seq', 4, true);
+
+
+--
+-- Data for Name: equipment; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY equipment (id, name, code, created_at, updated_at) FROM stdin;
+1	WiFi	WIF	2015-02-20 16:06:07.16939	2015-02-20 16:06:07.16939
+2	Ethernet	ETH	2015-02-20 16:06:17.801805	2015-02-20 16:06:17.801805
+3	Televízió	TVI	2015-02-20 16:06:32.414806	2015-02-20 16:06:32.414806
+4	Telefon	TEL	2015-02-20 16:06:40.533253	2015-02-20 16:06:40.533253
+5	Minibár	MBR	2015-02-20 16:06:51.504816	2015-02-20 16:06:51.504816
+6	Széf	SFE	2015-02-20 16:07:04.580965	2015-02-20 16:07:14.809788
+7	Légkondícionáló	CON	2015-02-20 16:07:31.707842	2015-02-20 16:07:31.707842
+\.
+
+
+--
+-- Name: equipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('equipment_id_seq', 7, true);
+
+
+--
+-- Data for Name: equipment_rooms; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY equipment_rooms (id, room_id, equipment_id, created_at, updated_at) FROM stdin;
+1	1	1	2015-02-20 16:14:51.611601	2015-02-20 16:14:51.611601
+2	1	3	2015-02-20 16:14:51.615432	2015-02-20 16:14:51.615432
+3	1	6	2015-02-20 16:14:51.618124	2015-02-20 16:14:51.618124
+4	2	1	2015-02-20 16:16:34.728009	2015-02-20 16:16:34.728009
+5	2	2	2015-02-20 16:16:34.730921	2015-02-20 16:16:34.730921
+6	2	3	2015-02-20 16:16:34.73795	2015-02-20 16:16:34.73795
+7	2	4	2015-02-20 16:16:34.74098	2015-02-20 16:16:34.74098
+8	3	6	2015-02-20 16:18:55.251157	2015-02-20 16:18:55.251157
+9	3	7	2015-02-20 16:18:55.2563	2015-02-20 16:18:55.2563
+10	4	1	2015-02-20 16:20:13.698744	2015-02-20 16:20:13.698744
+11	4	7	2015-02-20 16:20:13.700849	2015-02-20 16:20:13.700849
+12	5	1	2015-02-20 16:20:40.67634	2015-02-20 16:20:40.67634
+13	5	6	2015-02-20 16:20:40.678837	2015-02-20 16:20:40.678837
+14	5	7	2015-02-20 16:20:40.682028	2015-02-20 16:20:40.682028
+15	6	1	2015-02-20 16:24:35.361896	2015-02-20 16:24:35.361896
+16	6	2	2015-02-20 16:24:35.366367	2015-02-20 16:24:35.366367
+17	6	3	2015-02-20 16:24:35.369101	2015-02-20 16:24:35.369101
+18	6	4	2015-02-20 16:24:35.371554	2015-02-20 16:24:35.371554
+19	6	5	2015-02-20 16:24:35.374037	2015-02-20 16:24:35.374037
+20	6	6	2015-02-20 16:24:35.376576	2015-02-20 16:24:35.376576
+21	6	7	2015-02-20 16:24:35.379027	2015-02-20 16:24:35.379027
+22	7	1	2015-02-20 16:25:05.968682	2015-02-20 16:25:05.968682
+23	7	3	2015-02-20 16:25:05.972747	2015-02-20 16:25:05.972747
+24	7	7	2015-02-20 16:25:05.97831	2015-02-20 16:25:05.97831
+25	8	1	2015-02-20 16:25:35.113931	2015-02-20 16:25:35.113931
+26	8	7	2015-02-20 16:25:35.11731	2015-02-20 16:25:35.11731
+27	9	3	2015-02-20 16:26:17.229519	2015-02-20 16:26:17.229519
+28	10	1	2015-03-29 08:55:29.501598	2015-03-29 08:55:29.501598
+29	10	3	2015-03-29 08:55:29.503387	2015-03-29 08:55:29.503387
+30	10	4	2015-03-29 08:55:29.504751	2015-03-29 08:55:29.504751
+31	11	1	2015-03-29 08:56:28.262408	2015-03-29 08:56:28.262408
+32	11	3	2015-03-29 08:56:28.263929	2015-03-29 08:56:28.263929
+33	11	4	2015-03-29 08:56:28.265369	2015-03-29 08:56:28.265369
+34	11	7	2015-03-29 08:56:28.266699	2015-03-29 08:56:28.266699
+35	12	1	2015-03-29 09:02:27.047323	2015-03-29 09:02:27.047323
+36	12	7	2015-03-29 09:02:27.048738	2015-03-29 09:02:27.048738
+37	13	1	2015-03-29 09:04:05.405135	2015-03-29 09:04:05.405135
+38	13	7	2015-03-29 09:04:05.406624	2015-03-29 09:04:05.406624
+39	14	1	2015-03-29 09:06:13.345197	2015-03-29 09:06:13.345197
+40	14	5	2015-03-29 09:06:13.346665	2015-03-29 09:06:13.346665
+41	14	7	2015-03-29 09:06:13.347947	2015-03-29 09:06:13.347947
+42	15	1	2015-03-29 09:07:26.065034	2015-03-29 09:07:26.065034
+43	15	4	2015-03-29 09:07:26.066788	2015-03-29 09:07:26.066788
+44	15	7	2015-03-29 09:07:26.068468	2015-03-29 09:07:26.068468
+45	16	1	2015-03-29 09:08:42.032327	2015-03-29 09:08:42.032327
+46	16	7	2015-03-29 09:08:42.034588	2015-03-29 09:08:42.034588
+47	17	1	2015-03-29 09:10:41.593636	2015-03-29 09:10:41.593636
+48	17	7	2015-03-29 09:10:41.595084	2015-03-29 09:10:41.595084
+49	18	3	2015-03-29 09:14:47.382815	2015-03-29 09:14:47.382815
+50	19	3	2015-03-29 09:15:34.68379	2015-03-29 09:15:34.68379
+51	19	4	2015-03-29 09:15:34.685426	2015-03-29 09:15:34.685426
+52	19	7	2015-03-29 09:15:34.68684	2015-03-29 09:15:34.68684
+53	20	1	2015-03-29 14:52:58.790004	2015-03-29 14:52:58.790004
+54	20	6	2015-03-29 14:52:58.792046	2015-03-29 14:52:58.792046
+55	20	7	2015-03-29 14:52:58.794193	2015-03-29 14:52:58.794193
+56	21	1	2015-03-29 14:54:22.109756	2015-03-29 14:54:22.109756
+57	21	6	2015-03-29 14:54:22.111309	2015-03-29 14:54:22.111309
+58	21	7	2015-03-29 14:54:22.112646	2015-03-29 14:54:22.112646
+59	22	1	2015-03-29 14:55:42.250304	2015-03-29 14:55:42.250304
+60	22	5	2015-03-29 14:55:42.251499	2015-03-29 14:55:42.251499
+61	22	6	2015-03-29 14:55:42.25263	2015-03-29 14:55:42.25263
+62	22	7	2015-03-29 14:55:42.253761	2015-03-29 14:55:42.253761
+63	23	1	2015-03-29 14:57:42.998392	2015-03-29 14:57:42.998392
+64	23	3	2015-03-29 14:57:42.999681	2015-03-29 14:57:42.999681
+65	23	6	2015-03-29 14:57:43.000786	2015-03-29 14:57:43.000786
+66	23	7	2015-03-29 14:57:43.00194	2015-03-29 14:57:43.00194
+67	24	1	2015-03-29 15:02:35.092254	2015-03-29 15:02:35.092254
+68	24	2	2015-03-29 15:02:35.093557	2015-03-29 15:02:35.093557
+69	24	3	2015-03-29 15:02:35.094714	2015-03-29 15:02:35.094714
+70	24	4	2015-03-29 15:02:35.09591	2015-03-29 15:02:35.09591
+71	24	7	2015-03-29 15:02:35.097132	2015-03-29 15:02:35.097132
+72	25	1	2015-03-29 15:03:18.883349	2015-03-29 15:03:18.883349
+73	25	3	2015-03-29 15:03:18.884552	2015-03-29 15:03:18.884552
+74	25	7	2015-03-29 15:03:18.885666	2015-03-29 15:03:18.885666
+75	26	1	2015-03-31 11:28:33.270511	2015-03-31 11:28:33.270511
+76	27	1	2015-03-31 11:38:52.213684	2015-03-31 11:38:52.213684
+77	27	3	2015-03-31 11:38:52.215014	2015-03-31 11:38:52.215014
+78	27	4	2015-03-31 11:38:52.216141	2015-03-31 11:38:52.216141
+79	27	5	2015-03-31 11:38:52.217276	2015-03-31 11:38:52.217276
+80	27	7	2015-03-31 11:38:52.21853	2015-03-31 11:38:52.21853
+81	28	1	2015-03-31 11:57:46.52779	2015-03-31 11:57:46.52779
+82	28	3	2015-03-31 11:57:46.529671	2015-03-31 11:57:46.529671
+83	28	4	2015-03-31 11:57:46.530909	2015-03-31 11:57:46.530909
+84	28	5	2015-03-31 11:57:46.532238	2015-03-31 11:57:46.532238
+85	28	6	2015-03-31 11:57:46.533516	2015-03-31 11:57:46.533516
+86	28	7	2015-03-31 11:57:46.535104	2015-03-31 11:57:46.535104
+87	29	1	2015-03-31 11:59:17.288679	2015-03-31 11:59:17.288679
+88	29	3	2015-03-31 11:59:17.290083	2015-03-31 11:59:17.290083
+89	29	4	2015-03-31 11:59:17.291349	2015-03-31 11:59:17.291349
+90	29	5	2015-03-31 11:59:17.29252	2015-03-31 11:59:17.29252
+91	29	6	2015-03-31 11:59:17.293751	2015-03-31 11:59:17.293751
+92	29	7	2015-03-31 11:59:17.294957	2015-03-31 11:59:17.294957
+93	30	1	2015-03-31 12:00:44.882353	2015-03-31 12:00:44.882353
+94	30	3	2015-03-31 12:00:44.883686	2015-03-31 12:00:44.883686
+95	30	4	2015-03-31 12:00:44.885044	2015-03-31 12:00:44.885044
+96	30	5	2015-03-31 12:00:44.886596	2015-03-31 12:00:44.886596
+97	30	6	2015-03-31 12:00:44.887778	2015-03-31 12:00:44.887778
+98	30	7	2015-03-31 12:00:44.889026	2015-03-31 12:00:44.889026
+99	31	1	2015-03-31 12:15:04.010527	2015-03-31 12:15:04.010527
+100	31	3	2015-03-31 12:15:04.011957	2015-03-31 12:15:04.011957
+101	31	4	2015-03-31 12:15:04.01329	2015-03-31 12:15:04.01329
+102	31	5	2015-03-31 12:15:04.01451	2015-03-31 12:15:04.01451
+103	31	6	2015-03-31 12:15:04.015731	2015-03-31 12:15:04.015731
+104	31	7	2015-03-31 12:15:04.016999	2015-03-31 12:15:04.016999
+105	32	1	2015-03-31 12:16:08.167715	2015-03-31 12:16:08.167715
+106	32	2	2015-03-31 12:16:08.16896	2015-03-31 12:16:08.16896
+107	32	3	2015-03-31 12:16:08.170198	2015-03-31 12:16:08.170198
+108	32	4	2015-03-31 12:16:08.171454	2015-03-31 12:16:08.171454
+109	32	5	2015-03-31 12:16:08.172727	2015-03-31 12:16:08.172727
+110	32	6	2015-03-31 12:16:08.174048	2015-03-31 12:16:08.174048
+111	32	7	2015-03-31 12:16:08.175177	2015-03-31 12:16:08.175177
+112	33	1	2015-03-31 12:53:08.248413	2015-03-31 12:53:08.248413
+113	33	3	2015-03-31 12:53:08.24989	2015-03-31 12:53:08.24989
+114	33	4	2015-03-31 12:53:08.251114	2015-03-31 12:53:08.251114
+115	33	5	2015-03-31 12:53:08.252334	2015-03-31 12:53:08.252334
+116	33	7	2015-03-31 12:53:08.253572	2015-03-31 12:53:08.253572
+117	34	1	2015-03-31 12:54:05.648788	2015-03-31 12:54:05.648788
+118	34	3	2015-03-31 12:54:05.650216	2015-03-31 12:54:05.650216
+119	34	4	2015-03-31 12:54:05.651626	2015-03-31 12:54:05.651626
+120	34	5	2015-03-31 12:54:05.652929	2015-03-31 12:54:05.652929
+121	34	6	2015-03-31 12:54:05.654298	2015-03-31 12:54:05.654298
+122	34	7	2015-03-31 12:54:05.65565	2015-03-31 12:54:05.65565
+123	35	1	2015-03-31 13:03:31.077747	2015-03-31 13:03:31.077747
+124	35	3	2015-03-31 13:03:31.078986	2015-03-31 13:03:31.078986
+125	35	5	2015-03-31 13:03:31.080098	2015-03-31 13:03:31.080098
+126	35	6	2015-03-31 13:03:31.081331	2015-03-31 13:03:31.081331
+127	35	7	2015-03-31 13:03:31.082493	2015-03-31 13:03:31.082493
+128	36	1	2015-03-31 13:07:59.611456	2015-03-31 13:07:59.611456
+129	36	3	2015-03-31 13:07:59.612666	2015-03-31 13:07:59.612666
+130	36	4	2015-03-31 13:07:59.613826	2015-03-31 13:07:59.613826
+131	36	5	2015-03-31 13:07:59.614982	2015-03-31 13:07:59.614982
+132	36	6	2015-03-31 13:07:59.616169	2015-03-31 13:07:59.616169
+133	36	7	2015-03-31 13:07:59.617288	2015-03-31 13:07:59.617288
+134	37	1	2015-03-31 13:52:44.765505	2015-03-31 13:52:44.765505
+135	37	3	2015-03-31 13:52:44.766945	2015-03-31 13:52:44.766945
+136	37	5	2015-03-31 13:52:44.768081	2015-03-31 13:52:44.768081
+137	37	6	2015-03-31 13:52:44.769239	2015-03-31 13:52:44.769239
+138	37	7	2015-03-31 13:52:44.770609	2015-03-31 13:52:44.770609
+139	38	1	2015-03-31 13:53:43.193931	2015-03-31 13:53:43.193931
+140	38	3	2015-03-31 13:53:43.195307	2015-03-31 13:53:43.195307
+141	38	4	2015-03-31 13:53:43.196697	2015-03-31 13:53:43.196697
+142	38	5	2015-03-31 13:53:43.197919	2015-03-31 13:53:43.197919
+143	38	6	2015-03-31 13:53:43.199148	2015-03-31 13:53:43.199148
+144	38	7	2015-03-31 13:53:43.200363	2015-03-31 13:53:43.200363
+145	39	1	2015-04-01 08:16:22.977849	2015-04-01 08:16:22.977849
+146	39	3	2015-04-01 08:16:23.018507	2015-04-01 08:16:23.018507
+147	39	4	2015-04-01 08:16:23.02141	2015-04-01 08:16:23.02141
+148	39	5	2015-04-01 08:16:23.032155	2015-04-01 08:16:23.032155
+149	39	7	2015-04-01 08:16:23.034505	2015-04-01 08:16:23.034505
+150	40	1	2015-04-01 08:23:28.243578	2015-04-01 08:23:28.243578
+151	40	2	2015-04-01 08:23:28.247424	2015-04-01 08:23:28.247424
+152	40	3	2015-04-01 08:23:28.256809	2015-04-01 08:23:28.256809
+153	40	4	2015-04-01 08:23:28.259464	2015-04-01 08:23:28.259464
+154	40	5	2015-04-01 08:23:28.270248	2015-04-01 08:23:28.270248
+155	40	7	2015-04-01 08:23:28.273292	2015-04-01 08:23:28.273292
+156	41	2	2015-04-01 11:42:41.535381	2015-04-01 11:42:41.535381
+157	41	4	2015-04-01 11:42:41.536744	2015-04-01 11:42:41.536744
+158	42	1	2015-04-19 12:22:45.997492	2015-04-19 12:22:45.997492
+159	42	3	2015-04-19 12:22:46.010205	2015-04-19 12:22:46.010205
+160	43	1	2015-04-19 12:23:46.962406	2015-04-19 12:23:46.962406
+161	43	3	2015-04-19 12:23:46.96405	2015-04-19 12:23:46.96405
+162	44	1	2015-04-19 12:28:35.004515	2015-04-19 12:28:35.004515
+163	44	7	2015-04-19 12:28:35.005883	2015-04-19 12:28:35.005883
+164	45	1	2015-04-19 12:29:51.854333	2015-04-19 12:29:51.854333
+165	45	7	2015-04-19 12:29:51.855582	2015-04-19 12:29:51.855582
+166	46	1	2015-04-19 12:30:35.7766	2015-04-19 12:30:35.7766
+167	46	3	2015-04-19 12:30:35.777798	2015-04-19 12:30:35.777798
+168	46	7	2015-04-19 12:30:35.778908	2015-04-19 12:30:35.778908
+169	47	1	2015-04-19 12:31:18.763162	2015-04-19 12:31:18.763162
+170	47	7	2015-04-19 12:31:18.76478	2015-04-19 12:31:18.76478
+171	48	1	2015-04-19 13:11:51.415814	2015-04-19 13:11:51.415814
+172	48	7	2015-04-19 13:11:51.417142	2015-04-19 13:11:51.417142
+173	49	1	2015-04-19 13:13:14.149313	2015-04-19 13:13:14.149313
+174	49	7	2015-04-19 13:13:14.150453	2015-04-19 13:13:14.150453
+175	50	1	2015-04-19 13:15:44.43139	2015-04-19 13:15:44.43139
+176	50	7	2015-04-19 13:15:44.43295	2015-04-19 13:15:44.43295
+177	51	1	2015-04-19 13:22:12.762908	2015-04-19 13:22:12.762908
+178	51	7	2015-04-19 13:22:12.764148	2015-04-19 13:22:12.764148
+179	52	1	2015-04-19 13:23:48.978124	2015-04-19 13:23:48.978124
+180	52	3	2015-04-19 13:23:48.980012	2015-04-19 13:23:48.980012
+181	52	7	2015-04-19 13:23:48.981225	2015-04-19 13:23:48.981225
+182	53	1	2015-04-19 13:25:14.435915	2015-04-19 13:25:14.435915
+183	53	3	2015-04-19 13:25:14.437081	2015-04-19 13:25:14.437081
+184	53	7	2015-04-19 13:25:14.438234	2015-04-19 13:25:14.438234
+185	54	1	2015-04-19 13:31:41.212881	2015-04-19 13:31:41.212881
+186	54	3	2015-04-19 13:31:41.214053	2015-04-19 13:31:41.214053
+187	54	7	2015-04-19 13:31:41.215158	2015-04-19 13:31:41.215158
+188	55	1	2015-04-19 13:32:43.674681	2015-04-19 13:32:43.674681
+189	55	3	2015-04-19 13:32:43.675907	2015-04-19 13:32:43.675907
+190	55	7	2015-04-19 13:32:43.677018	2015-04-19 13:32:43.677018
+191	56	1	2015-04-19 13:33:29.17564	2015-04-19 13:33:29.17564
+192	56	3	2015-04-19 13:33:29.176926	2015-04-19 13:33:29.176926
+193	56	7	2015-04-19 13:33:29.178134	2015-04-19 13:33:29.178134
+194	57	1	2015-04-19 14:15:45.948623	2015-04-19 14:15:45.948623
+195	57	2	2015-04-19 14:15:45.950595	2015-04-19 14:15:45.950595
+196	57	3	2015-04-19 14:15:45.952248	2015-04-19 14:15:45.952248
+197	57	4	2015-04-19 14:15:45.953401	2015-04-19 14:15:45.953401
+198	57	5	2015-04-19 14:15:45.954577	2015-04-19 14:15:45.954577
+199	57	6	2015-04-19 14:15:45.955709	2015-04-19 14:15:45.955709
+200	57	7	2015-04-19 14:15:45.956827	2015-04-19 14:15:45.956827
+201	58	1	2015-04-19 14:16:54.136164	2015-04-19 14:16:54.136164
+202	58	2	2015-04-19 14:16:54.13731	2015-04-19 14:16:54.13731
+203	58	3	2015-04-19 14:16:54.138451	2015-04-19 14:16:54.138451
+204	58	4	2015-04-19 14:16:54.139587	2015-04-19 14:16:54.139587
+205	58	5	2015-04-19 14:16:54.140685	2015-04-19 14:16:54.140685
+206	58	6	2015-04-19 14:16:54.141776	2015-04-19 14:16:54.141776
+207	58	7	2015-04-19 14:16:54.143058	2015-04-19 14:16:54.143058
+208	64	1	2015-04-19 17:42:29.237365	2015-04-19 17:42:29.237365
+209	64	3	2015-04-19 17:42:29.239803	2015-04-19 17:42:29.239803
+210	65	1	2015-04-19 17:44:04.085317	2015-04-19 17:44:04.085317
+211	65	7	2015-04-19 17:44:04.086616	2015-04-19 17:44:04.086616
+212	66	1	2015-04-19 17:45:08.915341	2015-04-19 17:45:08.915341
+213	66	7	2015-04-19 17:45:08.916577	2015-04-19 17:45:08.916577
+214	67	1	2015-04-19 17:46:36.936811	2015-04-19 17:46:36.936811
+215	67	5	2015-04-19 17:46:36.938061	2015-04-19 17:46:36.938061
+216	68	1	2015-04-19 17:48:41.832549	2015-04-19 17:48:41.832549
+217	69	1	2015-04-19 17:50:10.084761	2015-04-19 17:50:10.084761
+218	69	3	2015-04-19 17:50:10.085974	2015-04-19 17:50:10.085974
+219	70	1	2015-04-19 17:51:43.786373	2015-04-19 17:51:43.786373
+220	70	7	2015-04-19 17:51:43.787645	2015-04-19 17:51:43.787645
+221	71	1	2015-04-19 17:52:44.076744	2015-04-19 17:52:44.076744
+222	72	1	2015-04-19 17:53:54.426738	2015-04-19 17:53:54.426738
+223	72	5	2015-04-19 17:53:54.428143	2015-04-19 17:53:54.428143
+224	73	1	2015-04-19 17:55:44.767058	2015-04-19 17:55:44.767058
+225	73	3	2015-04-19 17:55:44.768692	2015-04-19 17:55:44.768692
+226	74	1	2015-04-19 17:56:44.895088	2015-04-19 17:56:44.895088
+227	75	1	2015-04-19 17:57:59.027459	2015-04-19 17:57:59.027459
+228	77	1	2015-04-19 18:01:21.920423	2015-04-19 18:01:21.920423
+229	77	5	2015-04-19 18:01:21.921702	2015-04-19 18:01:21.921702
+230	77	7	2015-04-19 18:01:21.922855	2015-04-19 18:01:21.922855
+231	78	1	2015-04-19 18:05:51.136498	2015-04-19 18:05:51.136498
+232	78	5	2015-04-19 18:05:51.138106	2015-04-19 18:05:51.138106
+233	78	7	2015-04-19 18:05:51.139253	2015-04-19 18:05:51.139253
+234	79	1	2015-04-19 18:07:12.199288	2015-04-19 18:07:12.199288
+235	79	3	2015-04-19 18:07:12.200659	2015-04-19 18:07:12.200659
+236	80	1	2015-04-19 18:08:29.189848	2015-04-19 18:08:29.189848
+237	80	5	2015-04-19 18:08:29.191065	2015-04-19 18:08:29.191065
+238	81	1	2015-04-19 18:09:33.064591	2015-04-19 18:09:33.064591
+239	82	1	2015-04-19 18:10:38.114056	2015-04-19 18:10:38.114056
+240	82	3	2015-04-19 18:10:38.11531	2015-04-19 18:10:38.11531
+241	83	1	2015-04-19 18:12:03.950864	2015-04-19 18:12:03.950864
+242	84	7	2015-04-19 18:13:09.594954	2015-04-19 18:13:09.594954
+243	85	1	2015-04-19 18:14:10.457684	2015-04-19 18:14:10.457684
+244	85	5	2015-04-19 18:14:10.459375	2015-04-19 18:14:10.459375
+245	85	7	2015-04-19 18:14:10.460856	2015-04-19 18:14:10.460856
+246	86	1	2015-04-19 18:15:29.043566	2015-04-19 18:15:29.043566
+247	86	5	2015-04-19 18:15:29.044947	2015-04-19 18:15:29.044947
+\.
+
+
+--
+-- Name: equipment_rooms_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('equipment_rooms_id_seq', 247, true);
+
+
+--
+-- Data for Name: filters; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY filters (id, filter, base_url, city, start_date, end_date, capacity, guests, close, cheap, one_bed, two_bed, three_bed, four_or_more_bed, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: filters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('filters_id_seq', 1, false);
+
+
+--
+-- Data for Name: guests; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY guests (id, name, phone, day_of_birth, guest_id, created_at, updated_at) FROM stdin;
+1	Nagy Gábor	0123435	1925-02-20	\N	2015-02-20 15:35:05.864469	2015-02-20 15:35:05.864469
+31	Nagy Gáborné	0	2015-02-24	\N	2015-02-24 16:46:39.380424	2015-02-24 16:46:39.380424
+32	Nagy István	0	2015-02-24	\N	2015-02-24 16:49:32.162812	2015-02-24 16:49:32.162812
+34	Németh Vilmos	0	2015-02-24	1	2015-02-24 17:04:51.266305	2015-02-24 17:04:51.266305
+35	sdfsd	0	2015-02-24	1	2015-02-24 19:11:09.015952	2015-02-24 19:11:09.015952
+36	asd	0	2015-02-24	1	2015-02-24 19:11:09.034986	2015-02-24 19:11:09.034986
+37	asdasd	0	2015-02-24	1	2015-02-24 19:11:09.053269	2015-02-24 19:11:09.053269
+38	asd	0	2015-02-25	1	2015-02-25 16:00:03.260924	2015-02-25 16:00:03.260924
+39	sdf	0	2015-02-25	1	2015-02-25 16:00:03.298606	2015-02-25 16:00:03.298606
+40	dfg	0	2015-02-25	1	2015-02-25 16:00:03.389646	2015-02-25 16:00:03.389646
+41	fgh	0	2015-02-25	1	2015-02-25 16:00:03.42722	2015-02-25 16:00:03.42722
+42	ghj	0	2015-02-25	1	2015-02-25 16:00:03.438901	2015-02-25 16:00:03.438901
+43	hjk	0	2015-02-25	1	2015-02-25 16:00:03.461106	2015-02-25 16:00:03.461106
+44	jkl	0	2015-02-25	1	2015-02-25 16:00:03.47284	2015-02-25 16:00:03.47284
+45	klé	0	2015-02-25	1	2015-02-25 16:00:03.487815	2015-02-25 16:00:03.487815
+46	léá	0	2015-02-25	1	2015-02-25 16:00:03.498597	2015-02-25 16:00:03.498597
+47	éáű	0	2015-02-25	1	2015-02-25 16:00:03.513972	2015-02-25 16:00:03.513972
+48	qwe	0	2015-02-25	1	2015-02-25 16:00:03.523848	2015-02-25 16:00:03.523848
+49	wer	0	2015-02-25	1	2015-02-25 16:00:03.547942	2015-02-25 16:00:03.547942
+50	ert	0	2015-02-25	1	2015-02-25 16:00:03.559296	2015-02-25 16:00:03.559296
+51	rtz	0	2015-02-25	1	2015-02-25 16:00:03.57608	2015-02-25 16:00:03.57608
+52	tzu	0	2015-02-25	1	2015-02-25 16:00:03.597061	2015-02-25 16:00:03.597061
+53	zui	0	2015-02-25	1	2015-02-25 16:00:03.615846	2015-02-25 16:00:03.615846
+54	uio	0	2015-02-25	1	2015-02-25 16:00:03.629065	2015-02-25 16:00:03.629065
+55	dsa	0	1925-02-20	1	2015-03-03 19:14:45.752423	2015-03-03 19:14:45.752423
+56	dsa	0	1925-02-20	1	2015-03-03 19:14:45.790476	2015-03-03 19:14:45.790476
+58	Drescher Adrienn	+36302341209	1990-03-29	\N	2015-03-27 17:15:34.33497	2015-03-27 17:15:34.33497
+59	asd	0	2015-03-30	1	2015-03-30 16:54:17.704474	2015-03-30 16:54:17.704474
+60	Kis Imre	132456789	2015-04-17	\N	2015-04-17 11:02:28.517867	2015-04-17 11:02:28.517867
+61	Kertész Vilmos	012234556	2015-04-17	\N	2015-04-17 11:03:17.340793	2015-04-17 11:03:17.340793
+62	Nagy Gábor	0	1975-07-14	1	2015-04-20 09:35:10.570903	2015-04-20 09:35:10.570903
+63	Nagy Gáborné	0	1974-06-12	1	2015-04-20 09:35:10.577808	2015-04-20 09:35:10.577808
+64	Kis Imre	0	1975-07-14	1	2015-04-20 09:35:10.584461	2015-04-20 09:35:10.584461
+65	Kis Imréné	0	1975-07-14	1	2015-04-20 09:35:10.589499	2015-04-20 09:35:10.589499
+66	Szabó Attila	0	1975-07-14	1	2015-04-20 09:35:10.596569	2015-04-20 09:35:10.596569
+67	Szabó Attiláné	0	1975-07-14	1	2015-04-20 09:35:10.601416	2015-04-20 09:35:10.601416
+68	Nagy Gáborné	0	1975-07-14	1	2015-04-20 09:39:34.014365	2015-04-20 09:39:34.014365
+69	Kis Imre	0	1975-07-14	1	2015-04-20 09:39:34.037203	2015-04-20 09:39:34.037203
+70	Kis Imréné	0	1975-07-14	1	2015-04-20 09:39:34.043916	2015-04-20 09:39:34.043916
+71	Nagy Gáborné	0	1925-02-20	1	2015-04-20 09:52:48.565053	2015-04-20 09:52:48.565053
+72	Nagy Péter	0	1955-02-20	1	2015-04-20 09:52:48.571549	2015-04-20 09:52:48.571549
+\.
+
+
+--
+-- Name: guests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('guests_id_seq', 72, true);
+
+
+--
+-- Data for Name: owners; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY owners (id, name, created_at, updated_at) FROM stdin;
+1	Kis Gizi	2015-02-20 15:34:31.86517	2015-02-20 15:34:31.86517
+2	szállásadó1	2015-02-20 15:51:26.912395	2015-02-20 15:51:26.912395
+3	szállásadó2	2015-02-20 15:51:42.202822	2015-02-20 15:51:42.202822
+4	szállásadó3	2015-02-20 15:51:56.521448	2015-02-20 15:51:56.521448
+6	Marcsi Apartman	2015-03-27 17:44:03.95401	2015-03-27 17:44:03.95401
+7	Hotel Szilán	2015-03-27 17:47:23.290175	2015-03-27 17:47:23.290175
+8	Hotel Novotel	2015-04-01 08:09:18.967638	2015-04-01 08:09:18.967638
+9	Hotel Magister	2015-04-01 10:55:51.08922	2015-04-01 10:55:51.08922
+10	szállásadó4	2015-04-19 12:15:26.410627	2015-04-19 12:15:26.410627
+11	szállásadó5	2015-04-19 14:29:27.227446	2015-04-19 14:29:27.227446
+12	szállásadó6	2015-04-19 18:04:05.471381	2015-04-19 18:04:05.471381
+\.
+
+
+--
+-- Name: owners_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('owners_id_seq', 12, true);
+
+
+--
+-- Data for Name: prices; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY prices (id, value, currency, ifa, vat, room_id, created_at, updated_at) FROM stdin;
+11	26000	Ft	350	0.270000000000000018	11	2015-03-29 08:56:28.268217	2015-03-29 08:56:28.268217
+10	24000	Ft	350	0.270000000000000018	10	2015-03-29 08:55:29.506567	2015-03-29 08:56:52.914379
+12	19450	Ft	350	0.270000000000000018	12	2015-03-29 09:02:27.050268	2015-03-29 09:02:27.050268
+13	28900	Ft	350	0.270000000000000018	13	2015-03-29 09:04:05.408344	2015-03-29 09:04:05.408344
+14	32400	Ft	350	0.270000000000000018	14	2015-03-29 09:06:13.349455	2015-03-29 09:06:13.349455
+15	37800	Ft	350	0.270000000000000018	15	2015-03-29 09:07:26.070498	2015-03-29 09:07:26.070498
+16	51900	Ft	350	0.270000000000000018	16	2015-03-29 09:08:42.036498	2015-03-29 09:08:42.036498
+17	57600	Ft	350	0.270000000000000018	17	2015-03-29 09:10:41.596748	2015-03-29 09:10:41.596748
+18	26000	Ft	350	0.270000000000000018	18	2015-03-29 09:14:47.385084	2015-03-29 09:14:47.385084
+19	30000	Ft	350	0.270000000000000018	19	2015-03-29 09:15:34.68844	2015-03-29 09:15:34.68844
+20	9900	Ft	350	0.270000000000000018	20	2015-03-29 14:52:58.78758	2015-03-29 14:52:58.78758
+21	13500	Ft	350	0.270000000000000018	21	2015-03-29 14:54:22.108113	2015-03-29 14:54:22.108113
+22	15900	Ft	350	0.270000000000000018	22	2015-03-29 14:55:42.248777	2015-03-29 14:55:42.248777
+23	42100	Ft	350	0.270000000000000018	23	2015-03-29 14:57:42.996873	2015-03-29 14:57:42.996873
+24	32400	Ft	350	0.270000000000000018	24	2015-03-29 15:02:35.090561	2015-03-29 15:02:35.090561
+25	38400	Ft	350	0.270000000000000018	25	2015-03-29 15:03:18.881793	2015-03-29 15:03:18.881793
+28	27000	Ft	350	0.270000000000000018	28	2015-03-31 11:57:46.526126	2015-03-31 11:57:46.526126
+29	32000	Ft	350	0.270000000000000018	29	2015-03-31 11:59:17.287143	2015-03-31 11:59:17.287143
+30	40500	Ft	350	0.270000000000000018	30	2015-03-31 12:00:44.880662	2015-03-31 12:00:44.880662
+31	49800	Ft	350	0.270000000000000018	31	2015-03-31 12:15:04.008757	2015-03-31 12:15:04.008757
+32	80500	Ft	350	0.270000000000000018	32	2015-03-31 12:16:08.166074	2015-03-31 12:16:08.166074
+35	17500	Ft	350	0.270000000000000018	35	2015-03-31 13:03:31.076161	2015-03-31 13:03:31.076161
+36	29000	Ft	350	0.270000000000000018	36	2015-03-31 13:07:59.609943	2015-03-31 13:07:59.609943
+37	12000	Ft	350	0.270000000000000018	37	2015-03-31 13:52:44.763649	2015-03-31 13:52:44.763649
+38	23800	Ft	350	0.270000000000000018	38	2015-03-31 13:53:43.192363	2015-03-31 13:53:43.192363
+39	15000	Ft	350	0.270000000000000018	39	2015-04-01 08:16:22.965895	2015-04-01 08:16:22.965895
+40	21000	Ft	350	0.270000000000000018	40	2015-04-01 08:23:28.236063	2015-04-01 08:23:28.236063
+41	5000	Ft	350	0.270000000000000018	41	2015-04-01 11:42:41.533721	2015-04-01 11:42:41.533721
+42	10990	Ft	350	0.270000000000000018	42	2015-04-19 12:22:45.973119	2015-04-19 12:25:09.393568
+43	18490	Ft	350	0.270000000000000018	43	2015-04-19 12:23:46.9607	2015-04-19 12:25:36.1361
+44	10000	Ft	350	0.270000000000000018	44	2015-04-19 12:28:35.002883	2015-04-19 12:28:35.002883
+45	12600	Ft	350	0.270000000000000018	45	2015-04-19 12:29:51.852815	2015-04-19 12:29:51.852815
+46	15000	Ft	350	0.270000000000000018	46	2015-04-19 12:30:35.775065	2015-04-19 12:30:35.775065
+47	17000	Ft	350	0.270000000000000018	47	2015-04-19 12:31:18.761286	2015-04-19 12:31:18.761286
+48	15000	Ft	350	0.270000000000000018	48	2015-04-19 13:11:51.414221	2015-04-19 13:11:51.414221
+49	17000	Ft	350	0.270000000000000018	49	2015-04-19 13:13:14.147888	2015-04-19 13:13:14.147888
+50	12000	Ft	350	0.270000000000000018	50	2015-04-19 13:15:44.42964	2015-04-19 13:15:44.42964
+51	14500	Ft	350	0.270000000000000018	51	2015-04-19 13:22:12.761536	2015-04-19 13:22:12.761536
+52	19500	Ft	350	0.270000000000000018	52	2015-04-19 13:23:48.976296	2015-04-19 13:23:48.976296
+53	20500	Ft	350	0.270000000000000018	53	2015-04-19 13:25:14.434446	2015-04-19 13:25:14.434446
+56	14060	Ft	350	0.270000000000000018	56	2015-04-19 13:33:29.174129	2015-04-19 13:33:29.174129
+57	95000	Ft	350	0.270000000000000018	57	2015-04-19 14:15:45.946764	2015-04-19 14:15:45.946764
+58	110000	Ft	350	0.270000000000000018	58	2015-04-19 14:16:54.134618	2015-04-19 14:16:54.134618
+73	15000	Ft	350	0.270000000000000018	73	2015-04-19 17:55:44.764873	2015-04-19 17:55:44.764873
+74	10000	Ft	350	0.270000000000000018	74	2015-04-19 17:56:44.893123	2015-04-19 17:56:44.893123
+75	19000	Ft	350	0.270000000000000018	75	2015-04-19 17:57:59.026039	2015-04-19 17:57:59.026039
+76	16000	Ft	350	0.270000000000000018	76	2015-04-19 17:59:29.741856	2015-04-19 17:59:29.741856
+77	42000	Ft	350	0.270000000000000018	77	2015-04-19 18:01:21.91895	2015-04-19 18:01:21.91895
+78	22000	Ft	350	0.270000000000000018	78	2015-04-19 18:05:51.13502	2015-04-19 18:05:51.13502
+8	50000	Ft	350	0.270000000000000018	8	2015-02-20 16:25:35.121457	2015-04-19 16:00:00.322991
+54	9310	Ft	350	0.270000000000000018	54	2015-04-19 13:31:41.211478	2015-04-19 16:20:29.226734
+79	13500	Ft	350	0.270000000000000018	79	2015-04-19 18:07:12.197823	2015-04-19 18:07:12.197823
+59	10000	Ft	350	0.270000000000000018	59	2015-04-19 14:31:33.30344	2015-04-19 14:31:33.30344
+60	10000	Ft	350	0.270000000000000018	60	2015-04-19 14:32:53.02215	2015-04-19 14:32:53.02215
+61	10000	Ft	350	0.270000000000000018	61	2015-04-19 14:34:19.357894	2015-04-19 14:34:19.357894
+63	100000	Ft	350	0.270000000000000018	63	2015-04-19 14:36:49.598836	2015-04-19 14:36:49.598836
+26	19600	Ft	350	0.270000000000000018	26	2015-03-31 11:28:33.268431	2015-04-19 15:56:15.712227
+27	23600	Ft	350	0.270000000000000018	27	2015-03-31 11:38:52.212133	2015-04-19 15:56:33.18782
+80	14800	Ft	350	0.270000000000000018	80	2015-04-19 18:08:29.188475	2015-04-19 18:08:29.188475
+81	14400	Ft	350	0.270000000000000018	81	2015-04-19 18:09:33.063013	2015-04-19 18:09:33.063013
+34	26200	Ft	350	0.270000000000000018	34	2015-03-31 12:54:05.647261	2015-04-19 15:58:41.86157
+33	20400	Ft	350	0.270000000000000018	33	2015-03-31 12:53:08.246873	2015-04-19 15:58:51.190975
+6	40000	Ft	350	0.270000000000000018	6	2015-02-20 16:24:35.382305	2015-04-19 15:59:45.969961
+7	45000	Ft	350	0.270000000000000018	7	2015-02-20 16:25:05.983939	2015-04-19 15:59:53.946526
+55	9875	Ft	350	0.270000000000000018	55	2015-04-19 13:32:43.673301	2015-04-19 16:20:36.711568
+82	16500	Ft	350	0.270000000000000018	82	2015-04-19 18:10:38.112571	2015-04-19 18:10:38.112571
+83	14000	Ft	350	0.270000000000000018	83	2015-04-19 18:12:03.948989	2015-04-19 18:12:03.948989
+84	9900	Ft	350	0.270000000000000018	84	2015-04-19 18:13:09.592799	2015-04-19 18:13:09.592799
+3	32000	Ft	350	0.270000000000000018	3	2015-02-20 16:18:55.260026	2015-04-19 16:46:03.463768
+4	30000	Ft	350	0.270000000000000018	4	2015-02-20 16:20:13.704225	2015-04-19 16:46:10.181874
+5	34000	Ft	350	0.270000000000000018	5	2015-02-20 16:20:40.686117	2015-04-19 16:46:18.03738
+85	19000	Ft	350	0.270000000000000018	85	2015-04-19 18:14:10.455865	2015-04-19 18:14:10.455865
+86	30000	Ft	350	0.270000000000000018	86	2015-04-19 18:15:29.04195	2015-04-19 18:15:29.04195
+64	31900	Ft	350	0.270000000000000018	64	2015-04-19 17:42:29.235127	2015-04-19 19:26:45.889032
+9	36000	Ft	350	0.270000000000000018	9	2015-02-20 16:26:17.232675	2015-04-19 16:58:19.356675
+2	32000	Ft	350	0.270000000000000018	2	2015-02-20 16:16:34.743725	2015-04-19 16:58:25.34829
+1	36000	Ft	350	0.270000000000000018	1	2015-02-20 16:14:51.627472	2015-04-19 16:58:30.10864
+65	32935	Ft	350	0.270000000000000018	65	2015-04-19 17:44:04.083779	2015-04-19 17:44:04.083779
+70	16000	Ft	350	0.270000000000000018	70	2015-04-19 17:51:43.784947	2015-04-19 17:51:43.784947
+71	8000	Ft	350	0.270000000000000018	71	2015-04-19 17:52:44.075271	2015-04-19 17:52:44.075271
+72	13500	Ft	350	0.270000000000000018	72	2015-04-19 17:53:54.425273	2015-04-19 17:53:54.425273
+87	100000	Ft	350	0.270000000000000018	87	2015-04-21 10:50:20.695541	2015-04-21 10:50:20.695541
+69	25000	Ft	350	0.270000000000000018	69	2015-04-19 17:50:10.083317	2015-04-19 19:26:10.53742
+66	34000	Ft	350	0.270000000000000018	66	2015-04-19 17:45:08.913781	2015-04-19 19:26:21.180468
+67	23900	Ft	350	0.270000000000000018	67	2015-04-19 17:46:36.935208	2015-04-19 19:26:30.291352
+68	30000	Ft	350	0.270000000000000018	68	2015-04-19 17:48:41.831172	2015-04-19 19:26:38.056576
+88	50000	Ft	350	0.270000000000000018	88	2015-04-21 10:53:14.06813	2015-04-21 11:06:46.95527
+62	50000	Ft	350	0.270000000000000018	62	2015-04-19 14:35:57.162198	2015-04-21 11:06:51.52174
+\.
+
+
+--
+-- Name: prices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('prices_id_seq', 88, true);
+
+
+--
+-- Data for Name: properties; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY properties (id, key, value, "group", created_at, updated_at, title) FROM stdin;
+2	model_close	set ROOMS;\r\n\r\nparam min_capacity >= 0;\r\nparam min_distance = 1;\r\nparam guests >= 0;\r\n\r\nparam capacity {ROOMS} >=0;    # the amount of beds in a room\r\nparam stars {ROOMS} >=0;                                # average rating\r\nparam distance {ROOMS,ROOMS} >= 0;  # destination between rooms\r\n\r\nvar Occupation {ROOMS} binary;   # which rooms are included in solution\r\nvar occupied_rooms = sum {i in ROOMS} Occupation[i];\r\n\r\nsubject to Accommodation:    # selected overall room capacity has to be equal to guests or minimum room capacity\r\nsum {i in ROOMS} Occupation[i]*capacity[i] = if guests < min_capacity then min_capacity else guests;\r\n\r\nminimize OPTIMUM:\r\n\tsqrt((sum{(i,j) in {ROOMS,ROOMS}} (Occupation[i]*Occupation[j])*(distance[i,j] - min_distance)^2)/occupied_rooms + 1)/min_distance + \r\n    sqrt((sum{i in ROOMS} Occupation[i]*((stars[i]-10)^2))/occupied_rooms + 1)/10;	smartfilter	2015-03-29 11:49:59.064	2015-04-18 21:47:20.883195	Közeli modell
+3	model_cheap_and_close	set ROOMS;\r\n\r\nparam min_capacity >= 0;\r\nparam min_distance = 1;   \r\nparam min_price = 1;\r\nparam guests >= 0;\r\n\r\nparam capacity {ROOMS} >=0;    # the amount of beds in a room\r\nparam stars {ROOMS} >=0;                                # average rating\r\nparam price {ROOMS} >= 0;    # room price/night\r\nparam distance {ROOMS,ROOMS} >= 0;  # destination between rooms\r\n\r\nvar Occupation {ROOMS} binary;   # which rooms are included in solution\r\nvar occupied_rooms = sum {i in ROOMS} Occupation[i];\r\n\r\nsubject to Accommodation:    # selected rooms overall capacity have to be equal to guests\r\nsum {i in ROOMS} Occupation[i]*capacity[i] = if guests < min_capacity then min_capacity else guests;\r\n\r\nminimize OPTIMUM:\r\nsqrt((sum{i in ROOMS} Occupation[i]*((price[i]-min_price)^2))/occupied_rooms + 1)/min_price +\r\nif occupied_rooms > 1 then (\r\nsqrt((sum{(i,j) in {ROOMS,ROOMS}} (Occupation[i]*Occupation[j])*((distance[i,j]-min_distance)^2))/occupied_rooms + 1)\r\n/min_distance\r\n) + \r\n        sqrt((sum{i in ROOMS} Occupation[i]*((stars[i]-10)^2))/occupied_rooms + 1)/10;	smartfilter	2015-03-29 11:51:04.096	2015-04-18 21:47:11.273593	Olcsó és közeli modell
+1	model_cheap	set ROOMS;\r\n\r\nparam min_capacity >= 0;\r\nparam min_price = 1;\r\nparam guests >= 0;\r\n\r\nparam capacity {ROOMS} >=0;    # the amount of beds in a room\r\nparam stars {ROOMS} >=0;                                # average rating\r\nparam price {ROOMS} >= 0;    # room price/night\r\n\r\nvar Occupation {ROOMS} binary;   # which rooms are included in solution\r\nvar occupied_rooms = sum {i in ROOMS} Occupation[i];\r\n\r\nsubject to Accommodation:    # selected rooms overall capacity have to be equal to guests\r\nsum {i in ROOMS} Occupation[i]*capacity[i] = if guests < min_capacity then min_capacity else guests;\r\n\r\nminimize OPTIMUM:\r\nsqrt((sum{i in ROOMS} Occupation[i]*(price[i]-min_price)^2)/occupied_rooms + 1)/min_price + \r\nsqrt((sum{i in ROOMS} Occupation[i]*(stars[i]-10)^2)/occupied_rooms + 1)/10;	smartfilter	2015-03-29 11:49:46.844	2015-04-21 12:52:00.493787	Olcsó modell
+\.
+
+
+--
+-- Name: properties_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('properties_id_seq', 1, false);
+
+
+--
+-- Data for Name: rooms; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY rooms (id, name, code, accommodation_id, num_of_this, capacity, description, created_at, updated_at, image_file_name, image_content_type, image_file_size, image_updated_at) FROM stdin;
+39	Standard szoba	\N	15	4	4	A spacious room with King bed, en suite bath or shower, sofa bed, work area, TV with pay movies and internet access, broadband connection, hair dryer, safe and tea/coffee. Up to 2 adults and 2 children.	2015-04-01 08:16:22.937638	2015-04-04 09:38:51.020571	3333_ro_00_p_1024x768.jpg	image/jpeg	84256	2015-04-01 08:16:21.653158
+6	Room 7	\N	5	3	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-02-20 16:24:35.356275	2015-04-19 19:01:04.385332	room7.jpg	image/jpeg	599775	2015-03-27 17:25:10.617593
+88	Olcsó szoba 2	\N	54	2	2		2015-04-21 10:53:14.06642	2015-04-21 11:06:25.436871	\N	\N	\N	\N
+8	Room 9	\N	5	3	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-02-20 16:25:35.110717	2015-04-19 19:01:13.532529	room9.jpg	image/jpeg	133859	2015-03-27 17:25:22.365074
+19	Erkélyes Standard kétágyas 	\N	8	3	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:15:34.681861	2015-03-31 14:57:46.21652	szieszta_room.jpg	image/jpeg	34199	2015-03-31 14:57:45.869177
+22	Légkondicionált Superior kétágyas 	\N	9	3	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 14:55:42.247246	2015-03-31 15:00:44.453932	pannonia_superior.jpg	image/jpeg	71041	2015-03-31 15:00:43.770325
+14	Panorámás Premium franciaágyas 	\N	7	3	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:06:13.342195	2015-03-31 14:55:43.522119	sopron_premium1.jpg	image/jpeg	28948	2015-03-31 14:55:43.190821
+83	Superior Family négyágyas szoba	\N	49	7	4		2015-04-19 18:12:03.947411	2015-04-19 19:30:38.955094	\N	\N	\N	\N
+66	Légkondicionált Studio 2 fős apartman 1 hálótérrel	\N	31	7	2		2015-04-19 17:45:08.912225	2015-04-19 19:10:28.255259	\N	\N	\N	\N
+81	Kétágyas szoba	\N	47	7	2		2015-04-19 18:09:33.061557	2015-04-19 19:30:22.067323	\N	\N	\N	\N
+82	Franciaágyas szoba	\N	48	7	2		2015-04-19 18:10:38.111117	2015-04-19 19:30:29.197854	\N	\N	\N	\N
+21	Standard kétágyas 	\N	9	4	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 14:54:22.106242	2015-03-31 15:01:06.998105	pannonia_standard2.jpg	image/jpeg	49962	2015-03-31 15:01:06.278959
+23	Standard négyágyas 	\N	9	3	4	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 14:57:42.995133	2015-03-31 15:01:15.934027	pannonia_standard4.jpg	image/jpeg	59839	2015-03-31 15:01:15.226077
+27	Deluxe studio	\N	11	4	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-03-31 11:38:52.210636	2015-04-19 17:27:20.902078	charles_deluxe.jpg	image/jpeg	27126	2015-03-31 14:38:44.118157
+26	Standard studio	\N	11	5	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-03-31 11:28:33.266184	2015-04-19 17:20:22.935138	charles_standard.jpg	image/jpeg	30200	2015-03-31 14:38:54.070219
+40	Superior Room	\N	16	3	3	A modern spacious room with King bed, en suite bath/shower, sofa bed, large ergonomic work area, 26" LCD TV with pay movies and internet access, broadband connection, hair dryer, minibar, tea/coffee. Up to 2 adults and 2 children.	2015-04-01 08:23:28.205683	2015-04-04 09:37:22.584943	2996_ro_00_p_1024x768.jpg	image/jpeg	83685	2015-04-01 08:23:26.995656
+24	Erdőre néző Deluxe kétágyas 	\N	10	4	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 15:02:35.088784	2015-03-31 14:47:03.445985	fagus_deluxe.jpg	image/jpeg	57154	2015-03-31 14:47:02.986046
+25	Superior kétágyas 	\N	10	3	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 15:03:18.880067	2015-03-31 14:47:13.907303	fagus_Standard.jpg	image/jpeg	53736	2015-03-31 14:47:13.477257
+49	Standard négyágyas szoba	\N	20	4	4	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 13:13:14.146199	2015-04-19 16:42:28.607128	112315.jpg	image/jpeg	3527	2015-04-19 13:13:14.086584
+50	Standard kétágyas szoba	\N	20	6	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 13:15:44.427362	2015-04-19 16:42:22.617807	30587.jpg	image/jpeg	21299	2015-04-19 13:15:44.354836
+55	Balkonos Classic háromágyas szoba	\N	22	4	3	\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 13:32:43.671679	2015-04-19 17:04:44.171136	131117.jpg	image/jpeg	4631	2015-04-19 13:32:43.605253
+1	Room 1	\N	2	6	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-02-20 16:14:51.604893	2015-04-19 16:08:58.416595	room1.jpg	image/jpeg	133133	2015-03-27 17:20:06.245916
+56	Twin Family négyágyas szoba	\N	22	3	4	\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 13:33:29.172453	2015-04-19 17:04:48.396935	\N	\N	\N	\N
+9	Room 6	\N	4	7	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-02-20 16:26:17.221565	2015-04-19 16:11:51.578017	room6.jpg	image/jpeg	146398	2015-03-27 17:23:59.292902
+41	2 ágyas szoba	\N	17	5	2	Minden szobához mikrohullámú sütővel és hűtőszekrénnyel felszerelt minikonyha, valamint fürdőszoba tartozik. Emeletenként egy- egy sütésre-főzésre alkalmas közös konyha került kialakításra, mely kb. 20 fő egyidejű étkezésére alkalmas. Minden szinten egy Tv-vel felszerelt társalgó található. A földszinten kondicionáló terem, büfé-kávézó szolgálják a vendégek kényelmét. Az épületben 24 órás recepció szolgálat működik.	2015-04-01 11:42:41.53149	2015-04-04 09:36:56.992786	crw-4974-01-kicsi.jpg	image/jpeg	31891	2015-04-01 11:42:41.216133
+34	Superior szoba	\N	13	7	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-03-31 12:54:05.645542	2015-04-19 16:22:59.564466	mercure_superior.jpg	image/jpeg	669430	2015-03-31 14:35:32.395236
+33	Standard szoba	\N	13	8	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-03-31 12:53:08.245192	2015-04-19 16:16:42.589577	hotel_mercure_budapest_buda_room_standard.jpg	image/jpeg	32553	2015-03-31 14:35:16.034696
+59	Olcsó szoba 1	\N	24	2	2		2015-04-19 14:31:33.301639	2015-04-21 10:50:55.187098	\N	\N	\N	\N
+62	Olcsó szoba 4	\N	27	2	2		2015-04-19 14:35:57.160371	2015-04-21 10:51:53.098553	\N	\N	\N	\N
+61	Olcsó szoba 3	\N	26	2	2		2015-04-19 14:34:19.356382	2015-04-21 10:50:50.535366	\N	\N	\N	\N
+76	Fürdőszobás Romantik 4 fős apartman 2 hálótérrel	\N	42	3	4		2015-04-19 17:59:29.740471	2015-04-19 17:59:29.740471	\N	\N	\N	\N
+77	Deluxe Queen franciaágyas szoba	\N	43	4	2		2015-04-19 18:01:21.91742	2015-04-19 18:01:21.91742	\N	\N	\N	\N
+78	Fürdőszobás Business franciaágyas szoba	\N	44	4	2		2015-04-19 18:05:51.133493	2015-04-19 18:05:51.133493	\N	\N	\N	\N
+7	Room 8	\N	5	3	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-02-20 16:25:05.963632	2015-04-19 19:01:08.895776	room8.jpg	image/jpeg	322251	2015-03-27 17:25:57.587994
+42	Városra néző fürdőszobás franciaágyas szoba	\N	18	4	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 12:22:45.96892	2015-04-19 14:21:58.927096	adagio1.jpg	image/jpeg	224370	2015-04-19 12:22:45.047522
+11	Superior kétágyas 	\N	6	4	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 08:56:28.26051	2015-03-31 14:49:54.30724	lover_superior.jpg	image/jpeg	170498	2015-03-31 14:49:53.902244
+2	Room 2	\N	2	6	2	Praesent euismod, eros quis lacinia eleifend, elit nulla iaculis sem, et vulputate orci lacus ut nisi. Cras sodales nisi dolor. Curabitur non eros in dui faucibus pharetra sed a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo lorem, dignissim ac nulla convallis, rhoncus lacinia ipsum. Vivamus rutrum non lectus sed vehicula. Cras aliquam dignissim volutpat. Fusce mattis eleifend dignissim. Maecenas a felis nec nunc condimentum porta at quis augue. Ut tristique diam at urna faucibus, quis pretium dui malesuada. Nulla pulvinar congue feugiat. Quisque nec nisi vitae lacus blandit sagittis in sed urna. Pellentesque vitae fermentum risus, non viverra lorem. In porta ornare tortor ut sagittis.	2015-02-20 16:16:34.723982	2015-04-19 16:08:52.321795	room2.jpg	image/jpeg	701004	2015-03-27 17:19:50.277422
+12	Fürdőszobás Standard egyágyas 	\N	7	3	1	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:02:27.045462	2015-03-31 14:55:02.722001	sorpon_standard1.jpg	image/jpeg	35336	2015-03-31 14:55:02.391099
+13	Fürdőszobás Standard kétágyas 	\N	7	3	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:04:05.402958	2015-03-31 14:55:24.838227	sopron_standard2.jpg	image/jpeg	27765	2015-03-31 14:55:24.516008
+16	Panorámás Premium 3 fős apartman 	\N	7	3	3	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:08:42.030588	2015-03-31 14:55:55.497979	sopron_premium2.jpg	image/jpeg	47081	2015-03-31 14:55:55.102031
+79	Fürdőszobás Economy kétágyas szoba	\N	45	4	2		2015-04-19 18:07:12.196245	2015-04-19 18:07:12.196245	\N	\N	\N	\N
+80	Fürdőszobás Standard kétágyas szoba	\N	46	3	2		2015-04-19 18:08:29.187063	2015-04-19 18:08:29.187063	\N	\N	\N	\N
+87	Drága szoba 2	\N	53	4	2		2015-04-21 10:50:20.693482	2015-04-21 10:51:25.862194	\N	\N	\N	\N
+85	Superior franciaágyas szoba	\N	51	4	2		2015-04-19 18:14:10.454251	2015-04-19 18:14:10.454251	\N	\N	\N	\N
+86	Emeleti Standard franciaágyas szoba	\N	52	3	2		2015-04-19 18:15:29.04017	2015-04-19 18:15:29.04017	\N	\N	\N	\N
+54	Classic franciaágyas szoba	\N	22	4	2	\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 13:31:41.209776	2015-04-19 17:04:39.326516	\N	\N	\N	\N
+15	Fürdőszobás Standard háromágyas 	\N	7	3	3	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:07:26.062759	2015-03-31 14:55:14.575238	sopron_standard3.jpg	image/jpeg	36969	2015-03-31 14:55:14.26377
+17	Standard Family négyágyas 	\N	7	4	4	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:10:41.591707	2015-03-31 14:56:12.997985	sopron_premium_pano.jpg	image/jpeg	25741	2015-03-31 14:56:12.691085
+18	Erkélyes Classic kétágyas 	\N	8	3	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 09:14:47.379996	2015-03-31 14:57:38.555923	szieszta_room.jpg	image/jpeg	34199	2015-03-31 14:57:38.213141
+84	Emeleti Standard franciaágyas szoba	\N	50	4	2		2015-04-19 18:13:09.590559	2015-04-19 18:13:09.590559	\N	\N	\N	\N
+65	Kétágyas szoba	\N	30	4	2		2015-04-19 17:44:04.082284	2015-04-19 17:44:04.082284	\N	\N	\N	\N
+48	Standard háromágyas szoba	\N	20	4	3	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 13:11:51.412369	2015-04-19 16:42:35.343821	112314.jpg	image/jpeg	3855	2015-04-19 13:11:51.345646
+43	Városra néző négyágyas szoba	\N	18	4	4	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacus dolor, dignissim sit amet tempor vitae, consectetur et ex. Praesent fringilla sem sit amet eleifend finibus. Proin volutpat id metus eu volutpat. Vivamus eu quam facilisis, pulvinar quam in, ultrices purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus lobortis rhoncus orci ac pulvinar. Vivamus nec nisl nunc. Integer ac justo feugiat, laoreet arcu eu, pellentesque ex. Duis mollis elementum urna. Duis in commodo urna, vitae tempus nunc.	2015-04-19 12:23:46.958549	2015-04-19 14:22:14.981325	adagio2.jpg	image/jpeg	158726	2015-04-19 12:23:46.494167
+63	Drága szoba 1	\N	28	4	2		2015-04-19 14:36:49.59727	2015-04-21 10:51:01.728579	\N	\N	\N	\N
+20	Standard egyágyas 	\N	9	4	1	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 14:52:58.784746	2015-03-31 15:00:54.186034	pannonia_standard1.jpg	image/jpeg	66042	2015-03-31 15:00:53.476009
+10	Standard kétágyas 	\N	6	4	2	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec tincidunt justo. Suspendisse potenti. Nunc vehicula cursus sagittis. Etiam mollis justo leo, vitae consequat diam sollicitudin sed. Etiam tincidunt, nibh vestibulum faucibus condimentum, odio massa dictum turpis, a cursus enim nibh quis ante. Nulla facilisi. Ut viverra est vitae neque laoreet, finibus aliquam nisi ultricies. Etiam tempor, nunc eget viverra aliquam, felis nibh finibus sapien, vitae aliquet ante diam eget purus. Nam eleifend elementum massa in luctus. Nullam varius sapien ipsum. Sed ut nunc libero.	2015-03-29 08:55:29.499324	2015-03-31 14:50:18.772673	lover_standard.jpg	image/jpeg	164774	2015-03-31 14:50:18.341734
+\.
+
+
+--
+-- Name: rooms_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('rooms_id_seq', 88, true);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY schema_migrations (version) FROM stdin;
+20141124113607
+20141124113617
+20141124113627
+20141124113637
+20141124113647
+20141125112859
+20141125112917
+20141125130140
+20141125153213
+20141126105640
+20141126180619
+20141126180716
+20150203101520
+20150203101553
+20150203203021
+20150211210112
+20150212103821
+20150212104021
+20150212120006
+20150329193503
+20150329195525
+20150329195759
+20150330185132
+20150418195654
+20150328102239
+20150328105336
+\.
+
+
+--
+-- Data for Name: serviices; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY serviices (id, name, code, created_at, updated_at) FROM stdin;
+1	Jacuzzi	JAC	2015-02-20 16:04:43.009768	2015-02-20 16:04:43.009768
+2	Fedett uszoda	PO1	2015-02-20 16:05:09.082663	2015-02-20 16:05:09.082663
+3	Italbár	DRB	2015-02-20 16:05:27.431231	2015-02-20 16:05:27.431231
+4	Masszázs	MAS	2015-02-20 16:05:38.421359	2015-02-20 16:05:38.421359
+5	Parkoló	PAR	2015-02-20 16:05:55.031034	2015-02-20 16:05:55.031034
+\.
+
+
+--
+-- Name: serviices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('serviices_id_seq', 5, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: deploy
+--
+
+COPY users (id, email, encrypted_password, reset_password_token, reset_password_sent_at, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, role_type, role_id, created_at, updated_at) FROM stdin;
+5	s3@v.hu	$2a$10$dHFSFDwncVkHmKMg9PAhCu1qDkyCzi0quKZsDMcc6E7TRp3UOMd0y	\N	\N	\N	6	2015-03-31 14:25:16.039717	2015-03-31 11:16:50.204642	193.6.40.55	89.135.85.156	Owner	4	2015-02-20 15:51:56.523254	2015-03-31 14:25:16.053933
+1	s@s.hu	$2a$10$spbnTM7Vej0Gh/vZQPj7qe3OCJViKL3o1qNFlXaqRAf1T38c8H8/G	\N	\N	\N	1	2015-02-20 15:35:41.153365	2015-02-20 15:35:41.153365	127.0.0.1	127.0.0.1	Owner	1	2015-02-20 15:34:31.885121	2015-02-20 15:35:41.156024
+7	adrus90@gmail.com	$2a$10$iX41rpy6AxWgkPm3i4t6hOTj0D1AMxEj2xjlRyerYU5NhsRMfBU5y	\N	\N	2015-03-27 17:17:41.091616	1	2015-03-27 17:17:41.097379	2015-03-27 17:17:41.097379	84.21.7.41	84.21.7.41	Guest	58	2015-03-27 17:15:34.338889	2015-03-27 17:17:41.098649
+10	marcsi@v.hu	$2a$10$8z9rKUezutV/gjBsfZttueJPCxkoTZCCKhLPEh621LbA43uCppnV6	\N	\N	\N	1	2015-03-27 17:44:12.945679	2015-03-27 17:44:12.945679	84.21.7.41	84.21.7.41	Owner	6	2015-03-27 17:44:03.955469	2015-03-27 17:44:12.947699
+11	szilan@v.hu	$2a$10$Ofq.a1vzKEA5lTFl7evKduTCuO2QgiRGA/pnE.iNvEHXUTtPY0yfu	\N	\N	\N	0	\N	\N	\N	\N	Owner	7	2015-03-27 17:47:23.291728	2015-03-27 17:47:23.291728
+8	proba.jozska@lakimail.com	$2a$10$VaK25CfnOcSyMC3qq2xjDuluQG7WRYMCVaXaFSdUNHq.Uv2iWDCrC	\N	\N	\N	2	2015-03-27 17:55:52.736416	2015-03-27 17:33:30.319943	78.131.22.36	78.131.22.36	\N	\N	2015-03-27 17:33:30.311743	2015-03-27 17:55:52.738596
+12	foglalas@szfv.hotelnovotel.hu	$2a$10$9pWJAczxmKRB3FtJ4zUr0uUa2szLrY7SRoOMuRt4LouTbA7iThNG.	\N	\N	\N	1	2015-04-01 08:09:27.767502	2015-04-01 08:09:27.767502	89.135.110.175	89.135.110.175	Owner	8	2015-04-01 08:09:19.000563	2015-04-01 08:09:27.77784
+13	info@hotelmagister.hu	$2a$10$j.dp.D4sdUSRSGXDXHeNSOfy3RAj.nHCb2mYv9n75YD4NnQz4Unuq	\N	\N	\N	1	2015-04-01 10:56:26.074493	2015-04-01 10:56:26.074493	89.135.110.175	89.135.110.175	Owner	9	2015-04-01 10:55:51.283246	2015-04-01 10:56:26.077393
+14	v2@v.hu	$2a$10$5f6M0YGdCzXg4Fq5.YOna.Hh4kmS05QDjO0w.K5yhqUxSYe1iM436	\N	\N	\N	1	2015-04-17 11:02:38.383178	2015-04-17 11:02:38.383178	84.21.7.41	84.21.7.41	Guest	60	2015-04-17 11:02:28.523937	2015-04-17 11:02:38.384519
+15	v3@v.hu	$2a$10$ObELCkkH.kPU6Pw5cpNBJOta91tTUzdWWkA1M01v1b0k2iJzkXi5a	\N	\N	\N	0	\N	\N	\N	\N	Guest	61	2015-04-17 11:03:17.345318	2015-04-17 11:03:17.345318
+16	s4@v.hu	$2a$10$jcmNstrJJ7kis3QVPzz/tuAtBL6NZHsWs.gHZXKjxdG8mQYRQcGzK	\N	\N	\N	2	2015-04-19 13:01:57.002482	2015-04-19 12:15:38.222345	84.21.7.41	84.21.7.41	Owner	10	2015-04-19 12:15:26.417414	2015-04-19 13:01:57.003829
+4	s2@v.hu	$2a$10$Wz5FRatWcipFoN8fDRGJ/ODpDdxcbCuH8/iMbN4m4/qFouC5xTmuO	\N	\N	\N	7	2015-04-19 14:10:17.228073	2015-03-31 14:25:06.351194	84.21.7.41	193.6.40.55	Owner	3	2015-02-20 15:51:42.205162	2015-04-19 14:10:17.229542
+18	s6@v.hu	$2a$10$xHO2KP8lUYzyYjTT2v9C8eYFCRe36UEcP/uHQES4GgyC7XhrTgNe.	\N	\N	\N	1	2015-04-19 18:04:15.563979	2015-04-19 18:04:15.563979	84.21.7.41	84.21.7.41	Owner	12	2015-04-19 18:04:05.473568	2015-04-19 18:04:15.565357
+3	s1@v.hu	$2a$10$V4Qqzvs3smm/hZT3ZQjn7ebDrtCHpZ6O4npjqZy1BsvyQKu5xaYBu	\N	\N	\N	19	2015-04-20 10:36:31.414564	2015-04-20 10:20:52.421539	84.21.7.41	84.21.7.41	Owner	2	2015-02-20 15:51:26.915447	2015-04-20 10:36:31.416104
+17	s5@v.hu	$2a$10$wqUVeedP/TwHSlfAVAiSx.Nk.r5cQ7XNaj/CXrArW1TspMjRRhtia	\N	\N	\N	3	2015-04-21 10:48:57.737171	2015-04-19 17:37:17.626096	84.21.7.41	84.21.7.41	Owner	11	2015-04-19 14:29:27.229143	2015-04-21 10:48:57.73859
+6	a@v.hu	$2a$10$/H98kpx/jQYODdZhdMuBVOANz50GPThreBhT9mkYKQWLt0X/JUzTq	\N	\N	\N	21	2015-04-21 10:54:30.466744	2015-04-20 09:35:41.813993	84.21.7.41	84.21.7.41	Admin	1	2015-02-20 17:00:51.836	2015-04-21 10:54:30.468113
+2	v@v.hu	$2a$10$fQFYzR7U9iAPmVvpY0IQF.2iZOBXjgquvN/hy.8SYh1CEBwoQaKK6	\N	\N	\N	26	2015-04-22 17:51:49.59252	2015-04-20 10:22:24.893055	84.21.7.41	84.21.7.41	Guest	1	2015-02-20 15:35:05.868171	2015-04-22 17:51:49.593961
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: deploy
+--
+
+SELECT pg_catalog.setval('users_id_seq', 18, true);
+
+
+--
+-- Name: accommodation_equipments_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY accommodation_equipments
+    ADD CONSTRAINT accommodation_equipments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accommodations_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY accommodations
+    ADD CONSTRAINT accommodations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY addresses
+    ADD CONSTRAINT addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: admins_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY admins
+    ADD CONSTRAINT admins_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bookings_guests_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY bookings_guests
+    ADD CONSTRAINT bookings_guests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bookings_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY bookings
+    ADD CONSTRAINT bookings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bookings_rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY bookings_rooms
+    ADD CONSTRAINT bookings_rooms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categries_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY categries
+    ADD CONSTRAINT categries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: equipment_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY equipment
+    ADD CONSTRAINT equipment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: equipment_rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY equipment_rooms
+    ADD CONSTRAINT equipment_rooms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: filters_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY filters
+    ADD CONSTRAINT filters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: guests_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY guests
+    ADD CONSTRAINT guests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: owners_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY owners
+    ADD CONSTRAINT owners_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: prices_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY prices
+    ADD CONSTRAINT prices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: properties_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY properties
+    ADD CONSTRAINT properties_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY rooms
+    ADD CONSTRAINT rooms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: serviices_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY serviices
+    ADD CONSTRAINT serviices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: deploy; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: deploy; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

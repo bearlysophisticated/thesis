@@ -1,0 +1,15 @@
+mik.oktatas -> zv
+	fontos infok
+	formai követelmény
+
+2 rész 45-60 oldal min 50
+0. bevezetés - miértek; tartalmi összefoglaló v. abstract
+1. irodalom: hasonló rendszerek kutatás - konklúzió, csoportos foglalásokra modellek, RoR, LP-MLP; 12-15 oldal
+2. érdemi rész - hangsúlyos
+	specifikció: 2-3 oldal - követelmények
+	tervezési rész: db, logikai felépítés, diagramok, LP modell magyarázat	
+	implementálás: kód példák: int.keresés bemutatás 10 oldal; tagolt kód
+	kész sw bemutatás: user manual képekkel
+	tesztelés: adatok, különbségek megjelenítése; térkép; környezeti specifikáció
+	összefoglalás: eredmények bemutatása a specifikáció függvényében
+	irodalomjegyzék: min 10.
